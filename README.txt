@@ -1,0 +1,174 @@
+================================================================================
+  Quantitative Methods in Neuroscience (QMN) - Setup Guide
+  Master in Neuroscience, University of Geneva - Academic year 2026-27
+  Prof. Sami El-Boustani
+================================================================================
+
+This file explains how to set up your computer to run the course notebooks.
+You only need to do this ONCE, at the very beginning of the semester. After
+that, you simply activate the environment before each practical session.
+
+If you have never installed Python before, do not panic: read the file from
+top to bottom and run the commands exactly as written. The TAs will walk you
+through every step during the first practical (Week 1).
+
+
+--------------------------------------------------------------------------------
+  0.  WHAT YOU WILL HAVE AT THE END
+--------------------------------------------------------------------------------
+
+  * A working installation of conda (a tool that manages Python and its
+    scientific libraries).
+  * A self-contained "qmn" environment with the Python packages we will need
+    (numpy, pandas, scipy, matplotlib, seaborn, scikit-learn, statsmodels).
+    A few extra packages may be added later in the semester as needed.
+  * Jupyter notebooks running inside VS Code (or, optionally, JupyterLab).
+  * The first notebook of the course executing successfully on your laptop.
+
+
+--------------------------------------------------------------------------------
+  1.  PREREQUISITES - install conda (only if you do not already have it)
+--------------------------------------------------------------------------------
+
+We recommend Miniforge (a minimal conda distribution that uses the open
+conda-forge channel by default - no Anaconda account required).
+
+  * Windows / macOS / Linux:
+      Download the installer for your operating system from
+      https://conda-forge.org/download/
+      and run it with the default options. On Windows, accept the option
+      "Add Miniforge to my PATH" during installation if asked.
+
+If you already have Anaconda or Miniconda installed, you can keep using it -
+the commands below work the same way.
+
+To check that conda is installed and visible from your terminal 
+(e.g. anaconda prompt), open a new terminal window and type:
+
+    conda --version
+
+You should see something like "conda 24.9.0". If you get
+"command not found", close the terminal and reopen it,
+or re-run the installer with the "add to PATH" option ticked.
+
+We also recommend installing Visual Studio Code (free) from
+https://code.visualstudio.com and adding the official "Python" and
+"Jupyter" extensions from the VS Code marketplace.
+
+
+--------------------------------------------------------------------------------
+  2.  GET THE COURSE MATERIAL
+--------------------------------------------------------------------------------
+
+Download (or git-clone) the course folder shared on Moodle and place it
+somewhere convenient on your computer, e.g.:
+
+    Windows  ->  C:\Users\<your-name>\Documents\QMN_course
+    macOS    ->  /Users/<your-name>/Documents/QMN_course
+    Linux    ->  /home/<your-name>/Documents/QMN_course
+
+Open a terminal and change directory into that folder using the "cd" command:
+
+    Windows (PowerShell):   cd $HOME\Documents\QMN_course
+    macOS / Linux:          cd ~/Documents/QMN_course
+
+Typing the "dir" (Windows) or "ls" (macOS / Linux) command, check that you see at least these files:
+
+    environment.yml
+    README.txt              (this file)
+    notebooks/
+
+
+--------------------------------------------------------------------------------
+  3.  CREATE THE "qmn" CONDA ENVIRONMENT
+--------------------------------------------------------------------------------
+
+From the project root (the folder that contains environment.yml), run:
+
+    conda env create -f environment.yml
+
+This downloads and installs Python 3.11 and all the scientific libraries we
+will need during the semester. It can take 5-15 minutes depending on your
+internet connection. Grab a coffee.
+
+When it finishes, activate the environment:
+
+    conda activate qmn
+
+You should now see "(qmn)" at the beginning of your terminal prompt. From
+this point on, every Python / pip / jupyter command you run will use the
+isolated qmn environment.
+
+Finally, register the qmn environment as a Jupyter kernel so that VS Code (and
+JupyterLab) can see it in their kernel picker:
+
+    python -m ipykernel install --user --name qmn --display-name "Python (qmn)"
+
+You only need to do this once - the kernel will then appear in the
+"Select Kernel" menu of every notebook you open from now on.
+
+
+--------------------------------------------------------------------------------
+  4.  OPEN THE NOTEBOOK AND CHECK YOUR SETUP
+--------------------------------------------------------------------------------
+
+4a. With VS Code (recommended)
+
+    Still in the project root, launch:
+
+        code .
+
+    In VS Code, open notebooks/02_math_refresher.ipynb. In the top-right
+    corner click "Select Kernel" and choose "Python (qmn)".
+    Run the first two code cells (Shift+Enter). If you see the printed
+    versions of NumPy, pandas, matplotlib and the first 5 rows of the
+    dataset - congratulations, your setup is working.
+
+4b. With JupyterLab (alternative)
+
+        jupyter lab
+
+    Your browser will open. Navigate to notebooks/02_math_refresher.ipynb,
+    and in the "Kernel" menu choose "Python (qmn)".
+
+
+--------------------------------------------------------------------------------
+  5.  DAILY WORKFLOW (every time you sit down to work on the course)
+--------------------------------------------------------------------------------
+
+    cd ~/Documents/QMN_course      # or wherever you put the course folder
+    conda activate qmn
+    code .                         # or:  jupyter lab
+
+That is it. You do NOT need to repeat step 3 (the environment already exists).
+
+
+--------------------------------------------------------------------------------
+  6.  MAINTENANCE & TROUBLESHOOTING
+--------------------------------------------------------------------------------
+
+  * If during the semester we add a new package to environment.yml, re-sync
+    your local environment with:
+
+        conda activate qmn
+        conda env update -f environment.yml --prune
+
+  * If something gets broken and you want to start over from scratch:
+
+        conda deactivate
+        conda env remove -n qmn
+        conda env create -f environment.yml
+
+  * To list existing environments on your machine:
+        conda info --envs
+
+
+--------------------------------------------------------------------------------
+  7.  GETTING HELP
+--------------------------------------------------------------------------------
+
+  * Course Teams channel  - quick questions, screenshots welcome.
+  * Moodle forum          - longer questions and conceptual discussions.
+  * Weekly practical      - bring your laptop and ask the TAs in person.
+
+Good luck and welcome to the course!

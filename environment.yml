@@ -1,0 +1,30 @@
+# Course-wide conda environment for
+# "Quantitative Methods in Neuroscience" (Master in Neuroscience, UniGe, 2026-27).
+#
+# Create the environment once, then re-use it for every weekly notebook:
+#
+#     conda env create -f environment.yml
+#     conda activate qmn
+#
+# To update it later (e.g. after we add a new package for a later week):
+#
+#     conda env update -f environment.yml --prune
+
+name: qmn
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  # Core scientific stack
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn
+  # Statistics / modelling
+  - statsmodels
+  - scikit-learn
+  # Notebooks
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
