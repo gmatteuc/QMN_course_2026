@@ -28,3 +28,5 @@ dependencies:
   - jupyterlab
   - ipykernel
   - ipywidgets
+  # Git hygiene: scrubs .ipynb outputs at commit time so diffs stay readable
+  - nbstripout
