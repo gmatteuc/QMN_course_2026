@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="cover_image.png" alt="QMN — Quantitative Methods in Neuroscience" width="500">
+  <img src="misc/cover_image.png" alt="QMN — Quantitative Methods in Neuroscience" width="500">
 </p>
 
 # Quantitative Methods in Neuroscience (QMN)
@@ -22,7 +22,8 @@ QMN_course_2026/
 ├── environment.yml        ← conda environment ("qmn")
 ├── .gitattributes         ← activates nbstripout for *.ipynb
 ├── .gitignore
-├── cover_image.png
+├── misc/
+│   └── cover_image.png
 └── notebooks/
     ├── 02_math_refresher.ipynb
     ├── data/
