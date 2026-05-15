@@ -11,15 +11,15 @@ Practical notebooks for the **Quantitative Methods in Neuroscience** course — 
 
 ## Getting started
 
-See [`README.txt`](README.txt) for the full setup guide (install conda, create the `qmn` environment, register the Jupyter kernel, run the notebook).
+See [`SETUP_INSTRUCTIONS.txt`](SETUP_INSTRUCTIONS.txt) for the full setup guide (install conda, create the `qmn` environment, register the Jupyter kernel, run the notebook).
 
 ## Repository layout
 
 ```
 QMN_course_2026/
-├── README.md              ← this file
-├── README.txt             ← detailed setup guide
-├── environment.yml        ← conda environment ("qmn")
+├── README.md                  ← this file
+├── SETUP_INSTRUCTIONS.txt     ← detailed setup guide
+├── environment.yml            ← conda environment ("qmn")
 ├── .gitattributes         ← activates nbstripout for *.ipynb
 ├── .gitignore
 ├── misc/

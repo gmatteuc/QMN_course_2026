@@ -55,7 +55,8 @@ Run "dir" (Windows) or "ls" (macOS / Linux) and check that you see at
 least:
 
     environment.yml
-    README.txt
+    README.md
+    SETUP_INSTRUCTIONS.txt
     notebooks/
 
 
