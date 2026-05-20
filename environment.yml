@@ -30,3 +30,9 @@ dependencies:
   - ipywidgets
   # Git hygiene: scrubs .ipynb outputs at commit time so diffs stay readable
   - nbstripout
+  # Pip-only deps
+  - pip
+  - pip:
+      # IBL public-data access — used by data_prep/build_ibl_dataset.py
+      # Only TAs regenerating the dataset need this; students never touch it.
+      - one-api
