@@ -121,10 +121,10 @@ trial-level *fact table* (the two are joined on `subject_id`).
 
 | Column | Meaning |
 |---|---|
-| `subject_id` | Mouse identifier — the join key to `ibl_2afc.csv`. |
+| `subject_id` | Mouse identifier (the join key to `ibl_2afc.csv`). |
 | `lab` | IBL laboratory code: `churchlandlab` or `angelakilab`. |
 | `institution` | The lab's institution: Cold Spring Harbor Laboratory, or New York University. |
 | `sex` | `M` or `F`. |
 | `birth_date` | Date of birth (`YYYY-MM-DD`). |
 | `age_weeks_at_first_session` | Age, in weeks, at the mouse's first training session. |
-| `project` | The IBL project the mouse belongs to (see note below). |
+| `project` | The IBL project the mouse belongs to. |
