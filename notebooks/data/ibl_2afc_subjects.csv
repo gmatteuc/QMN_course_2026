@@ -1,0 +1,11 @@
+subject_id,lab,institution,sex,birth_date,age_weeks_at_first_session,project
+CSHL051,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
+CSHL054,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
+CSHL059,churchlandlab,Cold Spring Harbor Laboratory,M,2019-10-15,14,ibl_neuropixel_brainwide_01
+CSHL060,churchlandlab,Cold Spring Harbor Laboratory,M,2019-10-15,14,ibl_neuropixel_brainwide_01
+CSHL_014,churchlandlab,Cold Spring Harbor Laboratory,F,2019-02-19,17,ibl_neuropixel_brainwide_01
+CSP016,angelakilab,New York University,F,2020-05-05,9,angelaki_mouseASD
+CSP023,angelakilab,New York University,M,2020-08-11,8,angelaki_mouseASD
+CSP026,angelakilab,New York University,M,2021-01-26,9,angelaki_mouseASD
+CSP028,angelakilab,New York University,M,2021-01-26,9,angelaki_mouseASD
+CSP033,angelakilab,New York University,M,2021-09-28,10,angelaki_mouseASD

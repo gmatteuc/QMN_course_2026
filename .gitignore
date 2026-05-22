@@ -18,3 +18,10 @@ env/
 .DS_Store
 Thumbs.db
 *.swp
+
+# Data-prep working directory: only the build script and the exploration
+# notebook are tracked. The IBL reference material and the regenerable
+# parquet download cache stay out of the repository.
+data_prep/*
+!data_prep/build_ibl_dataset.py
+!data_prep/explore_ibl.ipynb

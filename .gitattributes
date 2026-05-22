@@ -1,3 +1,7 @@
 *.ipynb filter=nbstripout
 *.zpln filter=nbstripout
 *.ipynb diff=ipynb
+
+# The IBL exploration notebook is committed WITH its outputs, so its plots are
+# viewable on GitHub without running it — exempt it from nbstripout.
+data_prep/explore_ibl.ipynb -filter
