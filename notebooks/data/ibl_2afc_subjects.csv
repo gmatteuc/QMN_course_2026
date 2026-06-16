@@ -1,11 +1,31 @@
-subject_id,lab,institution,sex,birth_date,age_weeks_at_first_session,project
-CSHL051,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
-CSHL054,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
-CSHL059,churchlandlab,Cold Spring Harbor Laboratory,M,2019-10-15,14,ibl_neuropixel_brainwide_01
-CSHL060,churchlandlab,Cold Spring Harbor Laboratory,M,2019-10-15,14,ibl_neuropixel_brainwide_01
-CSHL_014,churchlandlab,Cold Spring Harbor Laboratory,F,2019-02-19,17,ibl_neuropixel_brainwide_01
-CSP016,angelakilab,New York University,F,2020-05-05,9,angelaki_mouseASD
-CSP023,angelakilab,New York University,M,2020-08-11,8,angelaki_mouseASD
-CSP026,angelakilab,New York University,M,2021-01-26,9,angelaki_mouseASD
-CSP028,angelakilab,New York University,M,2021-01-26,9,angelaki_mouseASD
-CSP033,angelakilab,New York University,M,2021-09-28,10,angelaki_mouseASD
+subject_id,group,genotype,lab,institution,sex,birth_date,age_weeks_at_first_session,project
+CSHL045,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,M,2019-08-06,13,ibl_neuropixel_brainwide_01
+CSHL046,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,M,2019-08-06,13,ibl_neuropixel_brainwide_01
+CSHL047,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,M,2019-08-06,13,ibl_neuropixel_brainwide_01
+CSHL049,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,M,2019-08-06,13,ibl_neuropixel_brainwide_01
+CSHL051,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
+CSHL053,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
+CSHL054,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
+CSHL055,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,F,2019-08-13,13,ibl_neuropixel_brainwide_01
+CSHL059,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,M,2019-10-15,14,ibl_neuropixel_brainwide_01
+CSHL060,WT,wild-type,churchlandlab,Cold Spring Harbor Laboratory,M,2019-10-15,14,ibl_neuropixel_brainwide_01
+CSP001,ASD,Cntnap2 (ASD model),angelakilab,New York University,M,2019-02-06,27,angelaki_mouseASD
+CSP003,ASD,Cntnap2 (ASD model),angelakilab,New York University,M,2019-02-06,27,angelaki_mouseASD
+CSP011,ASD,Cntnap2 (ASD model),angelakilab,New York University,F,2020-01-21,7,angelaki_mouseASD
+CSP013,ASD,Cntnap2 (ASD model),angelakilab,New York University,F,2020-01-21,8,angelaki_mouseASD
+CSP016,ASD,Cntnap2 (ASD model),angelakilab,New York University,F,2020-05-05,9,angelaki_mouseASD
+CSP023,ASD,Cntnap2 (ASD model),angelakilab,New York University,M,2020-08-11,8,angelaki_mouseASD
+CSP026,ASD,Cntnap2 (ASD model),angelakilab,New York University,M,2021-01-26,9,angelaki_mouseASD
+CSP028,ASD,Cntnap2 (ASD model),angelakilab,New York University,M,2021-01-26,9,angelaki_mouseASD
+CSP029,ASD,Cntnap2 (ASD model),angelakilab,New York University,M,2021-01-26,9,angelaki_mouseASD
+CSP033,ASD,Cntnap2 (ASD model),angelakilab,New York University,M,2021-09-28,10,angelaki_mouseASD
+NYU-08,WT,wild-type,angelakilab,New York University,F,2019-07-23,12,angelaki_mouseASD
+NYU-11,WT,wild-type,angelakilab,New York University,F,2019-07-23,12,ibl_neuropixel_brainwide_01
+NYU-28,WT,wild-type,angelakilab,New York University,M,2020-05-19,8,angelaki_mouseASD
+NYU-31,WT,wild-type,angelakilab,New York University,M,2020-06-16,9,angelaki_mouseASD
+NYU-32,WT,wild-type,angelakilab,New York University,M,2020-06-16,9,angelaki_mouseASD
+NYU-38,WT,wild-type,angelakilab,New York University,M,2020-08-31,10,angelaki_mouseASD
+NYU-42,WT,wild-type,angelakilab,New York University,M,2020-12-08,11,angelaki_mouseASD
+NYU-43,WT,wild-type,angelakilab,New York University,M,2020-12-08,11,angelaki_mouseASD
+NYU-50,WT,wild-type,angelakilab,New York University,M,2021-04-13,8,angelaki_mouseASD
+NYU-56,WT,wild-type,angelakilab,New York University,F,2021-07-13,11,angelaki_mouseASD

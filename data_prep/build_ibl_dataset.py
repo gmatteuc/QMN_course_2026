@@ -2,17 +2,22 @@
 
 What it does
 ------------
-- Connects (anonymous) to the IBL public Openalyx server.
+- Connects to the IBL public Openalyx server.
 - IBL mice progress through the training pipeline: each mouse first does the
   `trainingChoiceWorld` task (learning) and then graduates to the
-  `biasedChoiceWorld` task (trained, with bias blocks). So the SAME mouse has
-  sessions of both. This script uses a fixed, curated, lab-balanced list of
-  10 mice (CURATED_SUBJECTS: see the comment there) and takes the earliest
-  N_SESSIONS_PER_MOUSE sessions of each protocol:
-    * `trainingChoiceWorld`  → phase "training" (learning curves visible)
-    * `biasedChoiceWorld`    → phase "trained"  (post-training, bias blocks)
-  The result: the same 10 mice appear in both phases, so `phase` is a genuine
-  within-subject factor.
+  `biasedChoiceWorld` task (trained, with bias blocks). So the same mouse has
+  sessions of both. This script uses a fixed, curated list of 30 mice
+  (20 wild-type vs 10 Cntnap2 ASD-model: balanced 10/10/10
+  CSHL-WT / NYU-WT / CSP-ASD design). The two phases sample different parts of
+  each mouse's timeline:
+    * `trainingChoiceWorld` → phase "training" - ALL training sessions (the full
+       learning curve, naive -> proficient; ragged number of sessions per mouse)
+    * `biasedChoiceWorld` → phase "trained"  - the LATEST N_SESSIONS_PER_MOUSE
+       sessions (stable, well-practised bias-block behaviour; prior use keeps
+       maturing for many sessions after graduation, so early biased sessions
+       understate it)
+  The result: `phase` is a genuine within-subject factor (training is ragged in
+  length; trained is a fixed N per mouse).
 - Applies a single tidy schema across both phases (see map_to_qmn_schema and
   the data dictionary `notebooks/data/ibl_2afc_datadictionary.md` for the
   meaning, units and IBL source field of every column):
@@ -23,9 +28,10 @@ What it does
     choice_time_s, feedback_time_s
 - Runs a self-consistency check (validate()) before writing the CSV 
     (useful if we decide to modify stuff along the way).
-- Saves the combined dataframe as `notebooks/data/ibl_2afc.csv`.
+- Saves the combined dataframe as `notebooks/data/ibl_2afc.csv.gz`
+  (gzip-compressed; `pd.read_csv` reads it directly).
 
-Caching: each downloaded session's trials.table is cached as a parquet in
+Caching: each downloaded session's trials.table is cached as 
 `data_prep/cache/<eid>.pqt`; re-running the script is essentially free as
 long as the cache is intact. Delete the cache to redownload.
 
@@ -47,18 +53,51 @@ from one.api import ONE
 
 
 # ----------------------- configuration -----------------------------------
-# The 10 mice that make up the dataset:
-#   5 from the Churchland lab (Cold Spring Harbor Laboratory), prefix CSHL
-#   5 from the Angelaki  lab (New York University),            prefix CSP
-# All 10 were picked from the 129 IBL mice with >= 8 sessions of both the
-# training and biased protocols, scored on a three-axis compromise:
-#   1. reaction-time distribution — fraction of RTs in IBL's [0.08, 2.0] s window
-#   2. learning curve             — gradual training-phase accuracy gain
-#   3. psychometric curve         — steep, monotonic trained psychometric
-# Every chosen mouse shows real learning and a clean trained psychometric.
+# The 30 mice that make up the dataset, a balanced 10/10/10 design:
+#
+#   WILD-TYPE controls (20):
+#     10 Churchland lab (CSHL...,  Cold Spring Harbor Lab) - project
+#       ibl_neuropixel_brainwide_01
+#     10 Angelaki  lab (NYU-..,    New York University)     - project
+#       angelaki_mouseASD  (the WT/control cohort of that study)
+#   CNTNAP2 / ASD model (10):
+#     10 Angelaki lab (CSP...,    New York University)     - project
+#       angelaki_mouseASD
+#
+# Why Cntnap2: of the three ASD lines in Noel, Lakshminarasimhan, Angelaki
+# et al. 2025 (Nat Neurosci 28:1519) it shows the clearest "blunted updating
+# of priors" deficit.
+#
+# Line membership for the Angelaki mice is read off the nickname prefix
+# (NYU = wild-type, CSP = Cntnap2), the genotype-coding scheme of the
+# angelaki_mouseASD study (verified against its OSF behavior_list files for
+# the CSP cohort). Openalyx itself exposes no genotype field.
+#
+# Selection: all 20 mice clear the gate of >= N_SESSIONS_PER_MOUSE public
+# sessions of BOTH protocols. 
+# Balanced 10/10/10 design: 10 CSHL-WT, 10 NYU-WT, 10 CSP-ASD. This supports
+# two clean group comparisons on trained behaviour:
+#   * LAB (two wild-type cohorts): CSHL-WT vs NYU-WT -> non-significant.
+#   * GENOTYPE (within Angelaki):  NYU-WT vs CSP-ASD -> significant (reproduces Noel et al. 2025).
 
-CURATED_SUBJECTS = ["CSHL051", "CSHL054", "CSHL059", "CSHL060", "CSHL_014",
-                    "CSP016", "CSP023", "CSP026", "CSP028", "CSP033"]
+# Three mice with poor TRAINED psychometrics (disengaged / strong side bias:
+# easy-contrast accuracy ~0.66-0.71) were swapped out for clean replacements,
+# chosen on competence (easy-contrast accuracy + symmetric extremes) and data
+# quantity only, NOT on their block-prior shift:
+#   CSHL_014 -> CSHL053,  CSHL_012 -> CSHL049,  CSP015 -> CSP029.
+WILDTYPE_SUBJECTS = ["CSHL051", "CSHL054", "CSHL059", "CSHL060", "CSHL053",
+                     "CSHL049", "CSHL046", "CSHL055", "CSHL045", "CSHL047",
+                     "NYU-31", "NYU-32", "NYU-08", "NYU-28", "NYU-38",
+                     "NYU-43", "NYU-42", "NYU-11", "NYU-50", "NYU-56"]
+CNTNAP2_SUBJECTS  = ["CSP016", "CSP023", "CSP026", "CSP028", "CSP033",
+                     "CSP001", "CSP011", "CSP029", "CSP003", "CSP013"]
+CURATED_SUBJECTS  = WILDTYPE_SUBJECTS + CNTNAP2_SUBJECTS
+
+# subject -> (group, genotype) for the subject metadata table
+GROUP    = {**{s: "WT"  for s in WILDTYPE_SUBJECTS},
+            **{s: "ASD" for s in CNTNAP2_SUBJECTS}}
+GENOTYPE = {**{s: "wild-type"           for s in WILDTYPE_SUBJECTS},
+            **{s: "Cntnap2 (ASD model)" for s in CNTNAP2_SUBJECTS}}
 
 N_MICE                  = len(CURATED_SUBJECTS)
 N_SESSIONS_PER_MOUSE    = 8     # per phase
@@ -71,7 +110,7 @@ BIASED_PROTOCOL   = "_iblrig_tasks_biasedChoiceWorld"     # phase "trained"
 
 HERE          = Path(__file__).resolve().parent
 CACHE_DIR     = HERE / "cache"
-OUT_PATH      = HERE.parent / "notebooks" / "data" / "ibl_2afc.csv"
+OUT_PATH      = HERE.parent / "notebooks" / "data" / "ibl_2afc.csv.gz"
 SUBJECTS_OUT  = HERE.parent / "notebooks" / "data" / "ibl_2afc_subjects.csv"
 
 LAB_INSTITUTION = {
@@ -112,8 +151,13 @@ def select_subjects(one: ONE, n_sessions: int) -> dict[str, dict]:
     """Load the curated mice (CURATED_SUBJECTS) and verify each has at least
     n_sessions sessions of BOTH the training and biased protocols. Returns
         {subject: {"training": [eid, …], "trained": [eid, …]}}
-    with the earliest sessions of each protocol (plus a buffer of spares so the
-    short-session skip in main() can still reach n_sessions good ones).
+    Both lists are chronological and returned in FULL; main() decides how many
+    to keep per phase:
+      * "training" - ALL good sessions (the full learning curve, naive ->
+        proficient; ragged length per mouse).
+      * "trained"  - the LATEST n_sessions good biased sessions (stable,
+        well-practised bias-block behaviour); main() scans from the most recent
+        backwards past any short sessions.
     """
     print(f"  REST listing {TRAINING_PROTOCOL!r} sessions…", flush=True)
     training = _sessions_by_subject(one, TRAINING_PROTOCOL)
@@ -131,8 +175,8 @@ def select_subjects(one: ONE, n_sessions: int) -> dict[str, dict]:
                 f"public sessions (need >= {n_sessions} of each)."
             )
         chosen[subj] = {
-            "training": training[subj][:take],
-            "trained":  biased[subj][:take],
+            "training": training[subj],          # ALL training sessions (full learning curve)
+            "trained":  biased[subj],            # full list; main() takes latest 8
         }
         print(f"    {subj!r}: {n_tr} training / {n_bi} biased sessions available", flush=True)
     return chosen
@@ -173,7 +217,7 @@ def map_to_qmn_schema(df: pd.DataFrame, *, subject_id: str, phase: str,
                       session: int) -> pd.DataFrame:
     """Apply the QMN schema mapping to one session's IBL trials table.
 
-    The mapping is deliberately faithful to the IBL conventions — see the
+    The mapping is deliberately faithful to the IBL conventions - see the
     module docstring and the data dictionary for the rationale of every field.
     """
     # --- signed contrast: contrast on the right minus contrast on the left.
@@ -254,17 +298,19 @@ def validate(df: pd.DataFrame) -> None:
     assert (df.loc[df['no_go'], 'response'].isna().all()
             and df.loc[df['no_go'], 'correct'].isna().all()), \
         "VALIDATION FAILED: no_go trials must have NaN response and correct."
-    print(f"  validation OK — response x stimulus_side x correct consistent "
+    print(f"  validation OK - response x stimulus_side x correct consistent "
           f"on {len(d):,} decidable trials.")
 
 
 def build_subjects_table(one: ONE, subjects: list[str]) -> pd.DataFrame:
     """One row of metadata per mouse, queried from the IBL Alyx database.
 
-    This is the subject-level companion to the trial-level `ibl_2afc.csv`;
-    the two are joined on `subject_id`. Only the fields the public IBL release
-    actually populates are included: `strain`, `genotype` and `species` are
-    empty in the public data and therefore omitted.
+    This is the subject-level companion to the trial-level `ibl_2afc.csv.gz`;
+    the two are joined on `subject_id`. Openalyx leaves `strain`/`genotype`/
+    `species` empty, so the experimental `group` (WT / ASD) and `genotype`
+    (wild-type / Cntnap2) columns come from our own GROUP / GENOTYPE mapping
+    (derived from the angelaki_mouseASD nickname-prefix coding), not from the
+    public IBL release.
     """
     rows = []
     for subj in subjects:
@@ -281,6 +327,8 @@ def build_subjects_table(one: ONE, subjects: list[str]) -> pd.DataFrame:
         lab = rec.get("lab")
         rows.append({
             "subject_id":  subj,
+            "group":       GROUP.get(subj),
+            "genotype":    GENOTYPE.get(subj),
             "lab":         lab,
             "institution": LAB_INSTITUTION.get(lab, lab),
             "sex":         rec.get("sex"),
@@ -313,19 +361,32 @@ def main() -> None:
     for subj_idx, (subject, phases) in enumerate(chosen.items(), start=1):
         print(f"\n[{subj_idx}/{N_MICE}]  subject {subject!r}")
         for phase in ("training", "trained"):
-            kept = 0
-            for eid in phases[phase]:
-                if kept >= N_SESSIONS_PER_MOUSE:
+            # training -> ALL good sessions, chronological (the full learning
+            #             curve, naive -> proficient; ragged length per mouse).
+            # trained  -> the LATEST N good sessions (stable trained behaviour),
+            #             so we scan the biased list from the most recent back.
+            if phase == "training":
+                candidates = phases[phase]            # chronological, earliest first
+                cap = None                            # keep every good session
+            else:
+                candidates = list(reversed(phases[phase]))   # latest first
+                cap = N_SESSIONS_PER_MOUSE
+            kept_sessions = []
+            for eid in candidates:
+                if cap is not None and len(kept_sessions) >= cap:
                     break
                 df = load_trials(one, eid)
                 if df is None or len(df) < MIN_TRIALS_PER_SESSION:
                     continue
-                kept += 1
+                kept_sessions.append((eid, df))
+            if phase == "trained":
+                kept_sessions.reverse()   # restore chronological order for numbering
+            for sess_idx, (eid, df) in enumerate(kept_sessions, start=1):
                 all_rows.append(map_to_qmn_schema(
-                    df, subject_id=subject, phase=phase, session=kept))
-                print(f"    {phase:>8}  session {kept}  {eid[:8]}…  {len(df):>5} trials")
-            if kept < N_SESSIONS_PER_MOUSE:
-                print(f"    WARNING: only {kept}/{N_SESSIONS_PER_MOUSE} good "
+                    df, subject_id=subject, phase=phase, session=sess_idx))
+                print(f"    {phase:>8}  session {sess_idx}  {eid[:8]}…  {len(df):>5} trials")
+            if len(kept_sessions) < N_SESSIONS_PER_MOUSE:
+                print(f"    WARNING: only {len(kept_sessions)}/{N_SESSIONS_PER_MOUSE} good "
                       f"{phase} sessions for {subject!r}", file=sys.stderr)
 
     if not all_rows:
@@ -339,7 +400,7 @@ def main() -> None:
     validate(big)
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    big.to_csv(OUT_PATH, index=False)
+    big.to_csv(OUT_PATH, index=False, compression="gzip")
     print(f"\nWrote {len(big):,} trials to {OUT_PATH}")
     print(f"  phases     : {sorted(big['phase'].unique())}")
     print(f"  subjects   : {big['subject_id'].nunique()}")

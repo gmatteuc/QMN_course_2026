@@ -1,10 +1,12 @@
-# Data dictionary for `ibl_2afc.csv`
+# Data dictionary for `ibl_2afc.csv.gz`
 
-## Provenance
+## Data Provenance
 
 This file is a small, course-friendly subset of the **public International
 Brain Laboratory (IBL) behavioural data release**, downloaded from the public
-Openalyx server and reshaped by `data_prep/build_ibl_dataset.py`.
+Openalyx server and reshaped by `data_prep/build_ibl_dataset.py`. It is shipped
+**gzip-compressed** (`ibl_2afc.csv.gz`, ≈ 22 MB); `pandas.read_csv` opens it
+directly, no manual unzip needed.
 
 - Source task: the **IBL visual decision-making task**.
 - Primary references:
@@ -12,8 +14,11 @@ Openalyx server and reshaped by `data_prep/build_ibl_dataset.py`.
     measurement of decision-making in mice", *eLife* 10:e63711.
   - International Brain Laboratory et al. (2025), "A brain-wide map of neural
     activity during complex behaviour", *Nature* 645:177.
+  - Noel, Lakshminarasimhan, Angelaki et al. (2025), "A common computational and
+    neural anomaly across mouse models of autism", *Nature Neuroscience*
+    28:1519 (source of the Cntnap2 ASD-model mice and their wild-type controls).
 
-## The task in one paragraph
+## Behavioral Task
 
 A head-fixed mouse, with its forepaws on a small steering **wheel**, faces a
 screen. On each trial a **Gabor grating** (a striped patch) appears on the
@@ -21,46 +26,63 @@ screen. On each trial a **Gabor grating** (a striped patch) appears on the
 wheel is coupled to the grating; the mouse must **turn the wheel to bring the
 grating to the centre** within 60 s. A correct turn earns a water reward; an
 incorrect turn (or no response) gives a noise burst and a time-out. Difficulty
-is set by the contrast: high contrast is easy, 0 % contrast carries no visual
-information at all.
+is set by the contrast: high contrast is easy (Gabor grating clearly visible),
+ 0 % contrast carries no visual information at all (Gabor grating invisible).
 
 ## Two task phases (`phase` column)
 
 - **`training`**: the *basic task* (`trainingChoiceWorld`). The stimulus is
   equally likely on either side (`probability_left` = 0.5 throughout). Mice are
-  still **learning**; performance improves across sessions.
+  still **learning**; performance improves across sessions. We keep each mouse's
+  **full** `trainingChoiceWorld` history (every session), so the whole learning
+  curve is visible (a ragged number of sessions per mouse, ~14 to 64).
 - **`trained`**: the *full task* (`biasedChoiceWorld`). Well-trained mice; each
   session opens with 90 unbiased trials, then the stimulus-side prior switches
   between blocks (`probability_left` ∈ {0.2, 0.8}). This is the IBL "bias block"
-  manipulation.
+  manipulation. We keep each mouse's **latest** 8 biased sessions: prior use
+  keeps maturing for many sessions after graduation, so the late sessions are
+  the ones that reflect fully trained behaviour.
 
-The file contains **10 mice × 2 phases × 8 sessions each = 160 sessions,
-~100,000 trials**. The **same 10 mice appear in both phases**: IBL mice progress
-through the pipeline (`trainingChoiceWorld` → `biasedChoiceWorld`), so each
-mouse contributes both training-phase and trained-phase sessions, and `phase`
-is a genuine within-subject factor.
+The file contains **~694,000 trials from 30 mice across 1,086 sessions**. The
+**trained** phase has a fixed **8 sessions per mouse** (240 sessions); the
+**training** phase keeps each mouse's full history, so it is ragged: **14 to 64
+sessions per mouse** (846 sessions). The **same 30 mice appear in both phases**:
+IBL mice progress through the pipeline (`trainingChoiceWorld` →
+`biasedChoiceWorld`), so each mouse contributes both training-phase and
+trained-phase sessions, and `phase` is a genuine within-subject factor.
 
-The 10 mice are a **lab-balanced** set: 5 from **Anne Churchland's lab** 
-(Cold Spring Harbor Laboratory; `CSHL…` identifiers) and 5 from
-**Dora Angelaki's lab** (New York University; `CSP…` identifiers). They were selected
-among the 129 IBL mice based on several performance and reaction-time criteria.
-Per-mouse metadata (lab, institution, sex, age, project) is in the companion file
-`ibl_2afc_subjects.csv`.
+The 30 mice form a **balanced 10 / 10 / 10 wild-type-vs-autism-model design**:
+
+- **10 wild-type, Churchland lab** (Cold Spring Harbor Laboratory; `CSHL…`).
+- **10 wild-type, Angelaki lab** (New York University; `NYU-…`).
+- **10 Cntnap2 ASD-model, Angelaki lab** (New York University; `CSP…`).
+
+The `CSP…` mice carry the **Cntnap2 (CASPR2) mutation**, a mouse model of autism,
+and come from the `angelaki_mouseASD` study (Noel, Angelaki et al. 2025); the
+`NYU-…` mice are that study's wild-type controls. This structure supports two
+clean group comparisons (captured by the `group` and `genotype` columns of the
+companion table): a **lab** contrast between the two wild-type cohorts (`CSHL…`
+vs `NYU-…`) and a lab-matched **genotype** contrast between wild-type and ASD
+within the Angelaki lab (`NYU-…` vs `CSP…`). The mice were selected among the
+eligible IBL mice on **data quantity** (enough sessions of both protocols), not
+on behavioural performance, so the comparisons are not biased by selection.
+Per-mouse metadata (group, genotype, lab, institution, sex, age, project) is in
+the companion file `ibl_2afc_subjects.csv`.
 
 ## Columns
 
 | Column | Type | Units | Meaning | IBL source |
 |---|---|---|---|---|
-| `trial_id` | int | — | Unique row index across the whole file. | — |
-| `subject_id` | str | — | Mouse identifier (IBL naming, e.g. `CSHL051`, `CSP028`). Join key to the companion `ibl_2afc_subjects.csv`. | session metadata |
-| `phase` | str | — | `training` or `trained` (see above). | task protocol |
-| `session` | int | — | Session number within a subject (1–8). | — |
-| `trial_in_session` | int | — | Trial position within its session (1…N). | row order |
+| `trial_id` | int | - | Unique row index across the whole file. | - |
+| `subject_id` | str | - | Mouse identifier (IBL naming, e.g. `CSHL051`, `CSP028`). Join key to the companion `ibl_2afc_subjects.csv`. | session metadata |
+| `phase` | str | - | `training` or `trained` (see above). | task protocol |
+| `session` | int | - | Session number within a subject. `trained`: 1-8. `training`: 1 to that mouse's session count (ragged, up to ~64). | - |
+| `trial_in_session` | int | - | Trial position within its session (1…N). | row order |
 | `signed_contrast` | float | fraction [−1, 1] | Gabor **contrast**, signed: **positive = stimulus on the right, negative = left, 0 = no stimulus**. Magnitudes are {0, 0.0625, 0.125, 0.25, 0.5, 1.0} i.e. {0, 6.25, 12.5, 25, 50, 100} %. | `contrastRight − contrastLeft` |
-| `stimulus_side` | str | — | `'right'`, `'left'` or `'zero'`: the sign of `signed_contrast`, for convenience. | derived |
+| `stimulus_side` | str | - | `'right'`, `'left'` or `'zero'`: the sign of `signed_contrast`, for convenience. | derived |
 | `response` | float | 0 / 1 / NaN | The side the mouse **chose**: `1` = right, `0` = left, `NaN` = no-go. | `choice` (see convention below) |
 | `correct` | float | 0 / 1 / NaN | `1` if the trial was rewarded, `0` if not, `NaN` on no-go trials. | `feedbackType` |
-| `no_go` | bool | — | `True` if the mouse made no choice within the response window. **Kept, not dropped** (see below). | `choice == 0` |
+| `no_go` | bool | - | `True` if the mouse made no choice within the response window. **Kept, not dropped** (see below). | `choice == 0` |
 | `reaction_time_s` | float | seconds | **Reaction time**: time from stimulus onset to the **first wheel movement**. **Kept raw** (may be negative or implausibly short; see below). | `firstMovement_times − stimOn_times` |
 | `response_time_s` | float | seconds | **Response time**: time from stimulus onset to the moment the **choice threshold was crossed** (the choice was completed). | `response_times − stimOn_times` |
 | `probability_left` | float | probability | Block prior: the probability the stimulus is on the left. `0.5` in `training`; `{0.2, 0.5, 0.8}` in `trained` (0.5 only in the 90-trial unbiased intro of each trained session). | `probabilityLeft` |
@@ -95,7 +117,7 @@ therefore contains values that are **not valid reaction times**:
 
 - **Negative values**: the first wheel movement began
   *before* stimulus onset. Per the IBL "Working with wheel data" documentation,
-  *"negative times mean the onset of the movement occurred before the go cue"* —
+  *"negative times mean the onset of the movement occurred before the go cue"*;
   the mouse was already moving the wheel.
 - **Implausibly short values** (< 80 ms): a movement that fast cannot be a
   *response to* the stimulus (mouse visual→motor latency is ≥ ~100 ms).
@@ -110,18 +132,21 @@ therefore contains values that are **not valid reaction times**:
 ### 2. No-go trials (`no_go`)
 
 Trials where the mouse made no choice within the response window are **kept**
-and flagged with `no_go = True` (310 trials). On these, `response` and `correct`
+and flagged with `no_go = True` (2,904 trials). On these, `response` and `correct`
 are `NaN`. IBL's own analyses label no-go trials as incorrect.
 
-## Companion file — `ibl_2afc_subjects.csv`
+## Companion file: `ibl_2afc_subjects.csv`
 
-A small **subject-level metadata table**: one row per mouse (10 rows), queried
-from the IBL Alyx database. It is the *dimension table* to `ibl_2afc.csv`'s
-trial-level *fact table* (the two are joined on `subject_id`).
+A small **subject-level metadata table**: one row per mouse (30 rows), queried
+from the IBL Alyx database (the `group` and `genotype` columns are added by the
+build script, see the cohort description above). It is the *dimension table* to
+`ibl_2afc.csv.gz`'s trial-level *fact table* (the two are joined on `subject_id`).
 
 | Column | Meaning |
 |---|---|
-| `subject_id` | Mouse identifier (the join key to `ibl_2afc.csv`). |
+| `subject_id` | Mouse identifier (the join key to `ibl_2afc.csv.gz`). |
+| `group` | Experimental group: `WT` (wild-type) or `ASD` (Cntnap2 model). |
+| `genotype` | `wild-type` or `Cntnap2 (ASD model)`. |
 | `lab` | IBL laboratory code: `churchlandlab` or `angelakilab`. |
 | `institution` | The lab's institution: Cold Spring Harbor Laboratory, or New York University. |
 | `sex` | `M` or `F`. |
