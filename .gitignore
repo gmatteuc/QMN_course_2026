@@ -19,9 +19,16 @@ env/
 Thumbs.db
 *.swp
 
-# Data-prep working directory: only the build script and the exploration
-# notebook are tracked. The IBL reference material and the regenerable
-# parquet download cache stay out of the repository.
+# Data-prep working directory: only the exploration notebooks and the IBL build
+# script are tracked. Reference material, the EEG build scripts and the
+# regenerable download caches stay out of the repository.
 data_prep/*
 !data_prep/build_ibl_dataset.py
 !data_prep/explore_ibl.ipynb
+!data_prep/explore_eeg.ipynb
+!data_prep/explore_n170.ipynb
+
+# Raw EEG source files (~100 MB of .mat downloaded from Zenodo). The packaged
+# notebooks/data/alphawaves.npz is what the course uses; re-download the raw
+# release only if the package has to be rebuilt.
+eeg_datasets/

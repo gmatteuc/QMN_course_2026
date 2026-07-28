@@ -2,6 +2,8 @@
 *.zpln filter=nbstripout
 *.ipynb diff=ipynb
 
-# The IBL exploration notebook is committed WITH its outputs, so its plots are
-# viewable on GitHub without running it — exempt it from nbstripout.
+# The exploration notebooks are committed WITH their outputs, so their plots are
+# viewable on GitHub without running them: exempt them from nbstripout.
 data_prep/explore_ibl.ipynb -filter
+data_prep/explore_eeg.ipynb -filter
+data_prep/explore_n170.ipynb -filter
