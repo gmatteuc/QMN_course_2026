@@ -22,5 +22,5 @@ def sigmoid(x, slope=1.0, bias=0.0):
 
 def my_gaussian(x, mu, sigma): # TO BE REMOVED
     """Return the un-normalized Gaussian evaluated at x.""" # TO BE REMOVED
-    gauss = 1+np.exp(-0.5 * ((x - mu) / sigma) ** 2) # TO BE REMOVED
+    gauss = np.exp(-0.5 * ((x - mu) / sigma) ** 2) # TO BE REMOVED
     return gauss # TO BE REMOVED

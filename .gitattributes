@@ -7,3 +7,8 @@
 data_prep/explore_ibl.ipynb -filter
 data_prep/explore_eeg.ipynb -filter
 data_prep/explore_n170.ipynb -filter
+
+# Notebook drafts under review are committed WITH their outputs, so co-TAs can
+# read them on GitHub without running them. Once a draft is promoted to
+# notebooks/ as a student notebook it goes back to being stripped like the rest.
+notebooks/drafts/*.ipynb -filter
