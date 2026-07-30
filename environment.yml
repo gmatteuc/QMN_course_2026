@@ -9,6 +9,11 @@
 # To update it later (e.g. after we add a new package for a later week):
 #
 #     conda env update -f environment.yml --prune
+#
+# Versions are deliberately left open while the notebooks are still being
+# written. Once the weekly notebooks are final this file gets pinned to the
+# exact versions we tested against, so that every student builds the same
+# environment and the practicals behave the same way on every laptop.
 
 name: qmn
 channels:
@@ -24,15 +29,15 @@ dependencies:
   # Statistics / modelling
   - statsmodels
   - scikit-learn
+  # Tidy stats front-end: t-tests, ANOVA, repeated measures and post-hoc
+  # tests with readable output tables. Used from the ANOVA week onwards.
+  - pingouin
   # Notebooks
   - jupyterlab
   - ipykernel
   - ipywidgets
   # Git hygiene: scrubs .ipynb outputs at commit time so diffs stay readable
   - nbstripout
-  # Pip-only deps
-  - pip
-  - pip:
-      # IBL public-data access — used by data_prep/build_ibl_dataset.py
-      # Only TAs regenerating the dataset need this; students never touch it.
-      - one-api
+
+# Nothing extra is needed for the EEG weeks: both EEG datasets ship as plain
+# .npz files that load with numpy alone, so no MNE or other EEG library.
