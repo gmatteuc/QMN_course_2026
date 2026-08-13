@@ -36,7 +36,7 @@ trials = pd.read_csv(ROOT / "data" / "ibl_2afc.csv.gz")
 
 ## The weekly notebooks
 
-One folder, one file per week, named `NN_topic[_vN][_TA|_student].ipynb`. `_TA` carries the solutions, `_student` is the version handed out. Outdated drafts (kept for reference) are in `notebooks/legacy/`.
+One folder, one file per week, named `NN_topic[_vN][_TA|_STUDENT].ipynb`. `_TA` carries the solutions, `_STUDENT` is the version handed out. Outdated drafts (kept for reference) are in `notebooks/legacy/`.
 
 | Week | Topic | Notebook |
 |---|---|---|
@@ -46,7 +46,7 @@ One folder, one file per week, named `NN_topic[_vN][_TA|_student].ipynb`. `_TA` 
 | 4 | Inference I: t-tests, effect size, power | `04_inference_ttests_power_TA` |
 | 5 | Inference II: ANOVA and repeated measures | `05a_repeated_measures_practical_STUDENT`, `05b_anova_mechanics_advanced_STUDENT` |
 | 6 | Non-parametrics, permutation, bootstrap | `06_nonparametrics_permutation_bootstrap_TA` |
-| 7 | Correlation and regression | `07_regression_TA`, `07_regression_student` |
+| 7 | Correlation and regression | `07_regression_TA`, `07_regression_STUDENT` |
 | 8 | Mixed-effects models | `08_mixed_effects_TA` |
 | 9 | Linear algebra fundamentals | `09_linear_algebra_fundamentals_TA` |
 | 10 | Linear algebra for statistics | `10_linear_algebra_statistics_TA` |
@@ -72,7 +72,7 @@ Each dataset has an `explore_*.ipynb` beside it in `notebooks/data/`, already ru
 
 Proposals from the repository cleanup of 13/08, open for discussion:
 
-**Notebooks.** One folder, `notebooks/`, one file per week, named `NN_topic[_vN][_TA|_student].ipynb`, lowercase, no spaces. `_TA` carries the solutions, `_student` is the version handed out, `_vN` marks a competing version while the team decides. Outdated material goes to `notebooks/legacy/`, never deleted and never left next to the live files.
+**Notebooks.** One folder, `notebooks/`, one file per week, named `NN_topic[_vN][_TA|_STUDENT].ipynb`. The two suffixes are the only capitals: `_TA` carries the solutions, `_STUDENT` is the version handed out, `_vN` marks a competing version while the team decides. Outdated material goes to `notebooks/legacy/`, never deleted and never left next to the live files.
 
 **Environment.** One environment for the whole course, `qmn`, built from `environment.yml`, registered as the kernel `Python (qmn)`. A notebook that needs a new package adds it to `environment.yml` **and** to `REQUIRED` in `src/check_env.py`, so that everyone finds out by running the check rather than by hitting an `ImportError` mid-session (never `pip install` from inside a notebook).
 
