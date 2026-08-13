@@ -30,14 +30,19 @@ dependencies:
   - statsmodels
   - scikit-learn
   # Tidy stats front-end: t-tests, ANOVA, repeated measures and post-hoc
-  # tests with readable output tables. Used from the ANOVA week onwards.
+  # tests with readable output tables. Added for the ANOVA week; that week
+  # currently uses statsmodels instead, so this stays only if Week 5 adopts it.
   - pingouin
+  # EEG. Both EEG datasets ship as plain .npz files that load with numpy alone,
+  # so this is needed only for the scalp topographies in Notebook 11. mne-base
+  # is the light build: no 3D rendering stack, which is what makes MNE heavy.
+  - mne-base
   # Notebooks
   - jupyterlab
   - ipykernel
   - ipywidgets
-  # Git hygiene: scrubs .ipynb outputs at commit time so diffs stay readable
+  # Git hygiene. Notebook outputs are deliberately kept in the repository while
+  # the material is being written, so the filter is not active: see the comment
+  # in .gitattributes. It is kept here for the final pass, when the student
+  # repository is generated and outputs are stripped.
   - nbstripout
-
-# Nothing extra is needed for the EEG weeks: both EEG datasets ship as plain
-# .npz files that load with numpy alone, so no MNE or other EEG library.

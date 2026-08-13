@@ -89,7 +89,8 @@ In VS Code (recommended):
 
     code .
 
-Open notebooks/02_math_refresher.ipynb, click "Select Kernel" (top-right)
+Open any notebook from the notebooks/ folder, for example
+notebooks/02_math_refresher_TA.ipynb, click "Select Kernel" (top-right)
 and choose "Python (qmn)". Run the first two code cells (Shift+Enter):
 if they print package versions and the first rows of the dataset, your
 setup works.
@@ -136,13 +137,20 @@ You do NOT need to repeat step 3 - the environment is already there.
   7.  CONTRIBUTING  (TAs / collaborators only - students can skip)
 --------------------------------------------------------------------------------
 
-If you plan to commit changes to this repository, also activate the
-nbstripout filter once per clone, from the project root:
+Notebook outputs are deliberately KEPT in the repository while the material
+is being written, so that reviewers can read a notebook's results on GitHub
+without running it. Do NOT install the nbstripout filter.
 
-    nbstripout --install --attributes .gitattributes
+If you installed it earlier (the guide used to ask for it), remove it now,
+otherwise your clone will keep stripping outputs and every notebook will
+show up as modified:
 
-This automatically scrubs cell outputs from .ipynb files at commit time
-so git diffs stay small and readable.
+    nbstripout --uninstall
+
+and check that .git/info/attributes has no line for *.ipynb.
+
+Outputs get stripped once, at the end, by the script that generates the
+student-facing repository.
 
 
 --------------------------------------------------------------------------------
