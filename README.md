@@ -80,7 +80,7 @@ QMN_course_2026/
 ├── data_prep/                 ← TA-only: dataset build scripts and exploration notebooks
 └── notebooks/
     ├── NN_topic_TA.ipynb      ← one per week, see the table above
-    ├── assets/                ← images used by the notebooks
+    ├── assets/                ← images, one subfolder per notebook (assets/09/, ...)
     ├── data/                  ← the course datasets, one copy of each
     │   └── legacy/            ← datasets no live notebook reads
     ├── legacy/                ← superseded drafts, kept for reference
