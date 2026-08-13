@@ -19,14 +19,11 @@ env/
 Thumbs.db
 *.swp
 
-# Data-prep working directory: only the exploration notebooks and the IBL build
-# script are tracked. Reference material, the EEG build scripts and the
-# regenerable download caches stay out of the repository.
-data_prep/*
-!data_prep/build_ibl_dataset.py
-!data_prep/explore_ibl.ipynb
-!data_prep/explore_eeg.ipynb
-!data_prep/explore_n170.ipynb
+# Data-prep working directory: entirely local. The build scripts need API
+# credentials and warm caches, nobody but their author runs them, and the
+# provenance of each dataset is written up in its data dictionary instead. The
+# exploration notebooks that tour the datasets live in notebooks/data/.
+data_prep/
 
 # Figures written by the notebooks themselves when they are run (the plotting
 # section saves one on purpose). The images we ship live in notebooks/assets/.

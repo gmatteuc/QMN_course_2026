@@ -64,6 +64,8 @@ Three real datasets serve the whole course, and each is used across several week
 - `alphawaves.npz` — EEG with eyes open and eyes closed, used in Weeks 11 to 13.
 - `erpcore_n170.npz` — the ERP CORE N170 face-perception set, for the evoked-response material. See `eeg_datadictionary.md` and the accompanying licence.
 
+Each dataset has an `explore_*.ipynb` beside it in `notebooks/data/`, already run and with its figures, which is the quickest way to see what is inside before writing a practical around it. How each dataset was built is documented in its data dictionary; the build scripts themselves stay on the author's machine, since they need API credentials and warm caches.
+
 `notebooks/data/legacy/` holds material no live notebook reads any more, currently the synthetic 2AFC set that the first version of Notebook 2 was built on.
 
 ## Conventions
@@ -93,11 +95,11 @@ QMN_course_2026/
 ├── .gitignore
 ├── misc/
 │   └── cover_image.png
-├── data_prep/                 ← TA-only: dataset build scripts and exploration notebooks
 └── notebooks/
     ├── NN_topic_TA.ipynb      ← one per week, see the table above
     ├── assets/                ← images, one subfolder per notebook (assets/09/, ...)
     ├── data/                  ← the course datasets, one copy of each
+    │   ├── explore_*.ipynb    ← a tour of each dataset, run and with figures
     │   └── legacy/            ← datasets no live notebook reads
     ├── legacy/                ← superseded drafts, kept for reference
     └── src/
