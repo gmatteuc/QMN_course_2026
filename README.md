@@ -45,12 +45,13 @@ Week 14 is the exam and has no practical.
 
 ## Datasets
 
-Three datasets serve the whole course, and each of them is used across several weeks so that students meet a new method rather than a new dataset every time. They all live in `notebooks/data/` and are read from there, never downloaded and never duplicated.
+Three real datasets serve the whole course, and each is used across several weeks so that students meet a new method rather than a new dataset every time. They live in `notebooks/data/` and are read from there, never downloaded and never duplicated.
 
 - `ibl_2afc.csv.gz` and `ibl_2afc_subjects.csv` — behaviour of thirty mice from the International Brain Laboratory, used from Week 3 to Week 8. See `ibl_2afc_datadictionary.md`.
 - `alphawaves.npz` — EEG with eyes open and eyes closed, used in Weeks 11 to 13.
 - `erpcore_n170.npz` — the ERP CORE N170 face-perception set, for the evoked-response material. See `eeg_datadictionary.md` and the accompanying licence.
-- `psychophysics_2afc.csv` — a small synthetic 2AFC set, for teaching table mechanics before the real data arrives.
+
+`notebooks/data/legacy/` holds material no live notebook reads any more, currently the synthetic 2AFC set that the first version of Notebook 2 was built on.
 
 ## Repository layout
 
@@ -68,6 +69,7 @@ QMN_course_2026/
     ├── NN_topic_TA.ipynb      ← one per week, see the table above
     ├── assets/                ← images used by the notebooks
     ├── data/                  ← the course datasets, one copy of each
+    │   └── legacy/            ← datasets no live notebook reads
     ├── legacy/                ← superseded drafts, kept for reference
     └── src/
         ├── __init__.py
