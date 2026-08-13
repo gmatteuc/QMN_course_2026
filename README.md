@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="misc/cover_image.png" alt="QMN — Quantitative Methods in Neuroscience" width="500">
+  <img src="misc/cover_image.png" alt="QMN, Quantitative Methods in Neuroscience" width="500">
 </p>
 
 # Quantitative Methods in Neuroscience (QMN)
 
-Practical notebooks for the **Quantitative Methods in Neuroscience** course — Master in Neuroscience, University of Geneva (2026-27), taught by Prof. Sami El-Boustani.
+Practical notebooks for the **Quantitative Methods in Neuroscience** course, Master in Neuroscience, University of Geneva (2026-27), taught by Prof. Sami El-Boustani.
 
-> **Status (August 2026) — development repository.**
+> **Status (August 2026): development repository.**
 > All thirteen teaching weeks now have a draft, written by the teaching team and under review. Notebooks are committed **with their outputs**, so a reviewer can read what a notebook produces without running it, and most of them still contain the solutions. The student-facing repository, with solutions removed, is generated from this one at the end.
 
 ## Getting started
@@ -60,9 +60,9 @@ Week 14 is the exam and has no practical.
 
 Three real datasets serve the whole course, and each is used across several weeks so that students meet a new method rather than a new dataset every time. They live in `notebooks/data/` and are read from there, never downloaded and never duplicated.
 
-- `ibl_2afc.csv.gz` and `ibl_2afc_subjects.csv` — behaviour of thirty mice from the International Brain Laboratory, used from Week 3 to Week 8. See `ibl_2afc_datadictionary.md`.
-- `alphawaves.npz` — EEG with eyes open and eyes closed, used in Weeks 11 to 13.
-- `erpcore_n170.npz` — the ERP CORE N170 face-perception set, for the evoked-response material. See `eeg_datadictionary.md` and the accompanying licence.
+- `ibl_2afc.csv.gz` and `ibl_2afc_subjects.csv`: behaviour of thirty mice from the International Brain Laboratory, used from Week 3 to Week 8. See `ibl_2afc_datadictionary.md`.
+- `alphawaves.npz`: EEG with eyes open and eyes closed, used in Weeks 11 to 13.
+- `erpcore_n170.npz`: the ERP CORE N170 face-perception set, for the evoked-response material. See `eeg_datadictionary.md` and the accompanying licence.
 
 Each dataset has an `explore_*.ipynb` beside it in `notebooks/data/`, already run and with its figures, which is the quickest way to see what is inside before writing a practical around it. How each dataset was built is documented in its data dictionary; the build scripts themselves stay on the author's machine, since they need API credentials and warm caches.
 
