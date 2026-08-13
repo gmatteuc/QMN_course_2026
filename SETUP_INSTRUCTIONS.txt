@@ -89,7 +89,20 @@ In VS Code (recommended):
 
     code .
 
-Open any notebook from the notebooks/ folder, for example
+The fastest check, from the notebooks/ folder with the environment active:
+
+    python src/check_env.py
+
+It prints one line per package with the version you actually have, one line
+per dataset, and tells you what to do if something is missing.
+
+The same check from inside any notebook, which also verifies that the kernel
+you selected is the right one:
+
+    from src.check_env import check_environment
+    check_environment()
+
+Then open any notebook from the notebooks/ folder, for example
 notebooks/02_math_refresher_TA.ipynb, click "Select Kernel" (top-right)
 and choose "Python (qmn)". Run the first two code cells (Shift+Enter):
 if they print package versions and the first rows of the dataset, your

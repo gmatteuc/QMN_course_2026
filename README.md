@@ -13,6 +13,19 @@ Practical notebooks for the **Quantitative Methods in Neuroscience** course — 
 
 See [`SETUP_INSTRUCTIONS.txt`](SETUP_INSTRUCTIONS.txt) for the full setup guide: install conda, create the `qmn` environment from `environment.yml`, register the Jupyter kernel, open a notebook.
 
+To check an install, from `notebooks/` with the environment active:
+
+```
+python src/check_env.py
+```
+
+or, from inside any notebook, which also tells you whether you picked the right kernel:
+
+```python
+from src.check_env import check_environment
+check_environment()
+```
+
 Every notebook runs in the same environment, `qmn`, and reads its data from `notebooks/data/` through a path that works wherever the notebook is opened from:
 
 ```python
@@ -23,7 +36,7 @@ trials = pd.read_csv(ROOT / "data" / "ibl_2afc.csv.gz")
 
 ## The weekly notebooks
 
-One folder, one file per week, named `NN_topic[_vN][_TA|_student].ipynb`. `_TA` carries the solutions, `_student` is the version handed out. Superseded drafts live in `notebooks/legacy/`.
+One folder, one file per week, named `NN_topic[_vN][_TA|_student].ipynb`. `_TA` carries the solutions, `_student` is the version handed out. Outdated drafts (kept for reference) are in `notebooks/legacy/`.
 
 | Week | Topic | Notebook |
 |---|---|---|
