@@ -31,7 +31,6 @@ data_prep/*
 # Figures written by the notebooks themselves when they are run (the plotting
 # section saves one on purpose). The images we ship live in notebooks/assets/.
 notebooks/*.png
-notebooks/drafts/*.png
 
 # Raw EEG source files (~100 MB of .mat downloaded from Zenodo). The packaged
 # notebooks/data/alphawaves.npz is what the course uses; re-download the raw
