@@ -1,14 +1,17 @@
-*.ipynb filter=nbstripout
-*.zpln filter=nbstripout
-*.ipynb diff=ipynb
-
-# The exploration notebooks are committed WITH their outputs, so their plots are
-# viewable on GitHub without running them: exempt them from nbstripout.
-data_prep/explore_ibl.ipynb -filter
-data_prep/explore_eeg.ipynb -filter
-data_prep/explore_n170.ipynb -filter
-
-# Notebook drafts under review are committed WITH their outputs, so co-TAs can
-# read them on GitHub without running them. Once a draft is promoted to
-# notebooks/ as a student notebook it goes back to being stripped like the rest.
-notebooks/drafts/*.ipynb -filter
+# Notebook outputs are kept in the repository for the whole drafting phase.
+#
+# Every notebook here is under review by two TAs who are asked to run it end to
+# end and flag unexpected outputs, so the outputs have to be readable on GitHub
+# without running anything. Stripping happens once, at the end, in the script
+# that generates the student-facing repository.
+#
+# This also removes a trap: with the filter on, any notebook uploaded through
+# the GitHub web interface keeps its outputs in the commit but shows up as
+# locally modified on every clone, because the filter strips it again at diff
+# time. Eight notebooks were in that state before this change.
+#
+# To turn stripping back on, uncomment the two lines below and run once:
+#   nbstripout --install --attributes .gitattributes
+#
+# *.ipynb filter=nbstripout
+# *.zpln filter=nbstripout
