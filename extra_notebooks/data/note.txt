@@ -9,15 +9,5 @@ Nothing heavy is committed in this folder. Two cases:
 
 2. The notebook needs a file that no library can fetch.
    Then the file stays on the Teams shared folder and a short note goes here,
-   one per dataset, saying what it is and where to find it. Copy the shape of
-   the entry below.
-
---------------------------------------------------------------------------------
-
-functional ultrasound imaging, rat superior colliculus
-    used by     the fUSI exercise on fundamental functions
-    files       functional_data.nii.gz (85 MB), mask.nii.gz
-    where       Teams, General folder of the QMN team
-    shape       1 x 112 x 128 x 825, one coronal plane, 825 time points
-    note        the file is float64; a float32 or scaled int16 version would be
-                four times smaller and could then live in the repository
+   one per dataset, saying what it is, which notebook uses it, and where to
+   find it.
