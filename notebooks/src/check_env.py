@@ -43,9 +43,18 @@ DATASETS = [
 
 
 def course_root():
-    """The notebooks/ folder, whether we are inside it or in a subfolder of it."""
+    """The notebooks/ folder, found from wherever this was started.
+
+    Notebooks always run with the working directory set to their own folder, so
+    inside a notebook the one-line idiom in the README is enough. A script is
+    different: it gets typed from wherever the student happens to be, most often
+    the project root, so it is worth looking around a little.
+    """
     here = Path.cwd()
-    return here if (here / "data").is_dir() else here.parent
+    for candidate in (here, here / "notebooks", here.parent, here.parent.parent):
+        if (candidate / "data").is_dir() and (candidate / "src").is_dir():
+            return candidate
+    return here          # nothing found: report against the current folder
 
 
 def check_environment(verbose=True):

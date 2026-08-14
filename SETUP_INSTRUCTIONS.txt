@@ -16,23 +16,31 @@ the commands exactly as written.
   1.  INSTALL CONDA  (skip if you already have Anaconda or Miniconda)
 --------------------------------------------------------------------------------
 
-We recommend Miniforge (minimal conda + open conda-forge channel, no
-Anaconda account required). Download the installer for your OS and run
-it with the default options:
+We recommend Miniconda, the minimal conda installer: it gives you conda
+and a Python, and nothing else. Download the installer for your OS and
+run it with the default options:
 
-    https://conda-forge.org/download/
+    https://www.anaconda.com/docs/getting-started/miniconda/install
 
-On Windows, accept "Add Miniforge to my PATH" if asked. Then open a new
-terminal (on Windows: the "Miniforge Prompt", or any shell with conda on
-PATH) and verify:
+On Windows, accept "Add Miniconda to my PATH" if asked. Then open a new
+terminal (on Windows: the "Anaconda Prompt (miniconda3)", or any shell
+with conda on PATH) and verify:
 
     conda --version
 
 You should see something like "conda 24.9.0". If you get "command not
 found", close the terminal, reopen it, and try again.
 
-Also recommended: install VS Code (https://code.visualstudio.com) plus
-its official "Python" and "Jupyter" extensions.
+Do NOT install Python separately from python.org. Miniconda already
+includes one, and the qmn environment will provide another. Having several
+Python interpreters on the same machine is the most common cause of package
+import problems.
+
+Also install VS Code (https://code.visualstudio.com) and, from its
+Extensions panel, these official Microsoft extensions:
+
+    Python      (installs Pylance and the Python Debugger with it)
+    Jupyter     (runs notebooks inside VS Code)
 
 
 --------------------------------------------------------------------------------
@@ -89,9 +97,11 @@ In VS Code (recommended):
 
     code .
 
-The fastest check, from the notebooks/ folder with the environment active:
+The fastest check, with the qmn environment active. From the course folder:
 
-    python src/check_env.py
+    python notebooks/src/check_env.py
+
+(or "python src/check_env.py" if you are already inside notebooks/)
 
 It prints one line per package with the version you actually have, one line
 per dataset, and tells you what to do if something is missing.
@@ -108,13 +118,6 @@ and choose "Python (qmn)". Run the first two code cells (Shift+Enter):
 if they print package versions and the first rows of the dataset, your
 setup works.
 
-Alternative - JupyterLab:
-
-    jupyter lab
-
-then open the notebook from the file tree and pick "Python (qmn)" from
-the Kernel menu.
-
 
 --------------------------------------------------------------------------------
   5.  DAILY WORKFLOW
@@ -122,9 +125,9 @@ the Kernel menu.
 
 Every time you come back to work on the course:
 
-    cd ~/Documents/QMN_course      # or wherever you put it
+    cd ~/Documents/QMN_course
     conda activate qmn
-    code .                         # or:  jupyter lab
+    code .
 
 You do NOT need to repeat step 3 - the environment is already there.
 
@@ -147,30 +150,9 @@ You do NOT need to repeat step 3 - the environment is already there.
 
 
 --------------------------------------------------------------------------------
-  7.  CONTRIBUTING  (TAs / collaborators only - students can skip)
+  7.  GETTING HELP
 --------------------------------------------------------------------------------
 
-Notebook outputs are deliberately KEPT in the repository while the material
-is being written, so that reviewers can read a notebook's results on GitHub
-without running it. Do NOT install the nbstripout filter.
-
-If you installed it earlier (the guide used to ask for it), remove it now,
-otherwise your clone will keep stripping outputs and every notebook will
-show up as modified:
-
-    nbstripout --uninstall
-
-and check that .git/info/attributes has no line for *.ipynb.
-
-Outputs get stripped once, at the end, by the script that generates the
-student-facing repository.
-
-
---------------------------------------------------------------------------------
-  8.  GETTING HELP
---------------------------------------------------------------------------------
-
-  * Course Teams channel  - quick questions, screenshots welcome.
   * Moodle forum          - longer questions and conceptual discussions.
   * Weekly practical      - bring your laptop and ask the TAs in person.
 
