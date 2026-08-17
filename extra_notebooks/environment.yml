@@ -1,0 +1,23 @@
+name: qmn-optional
+channels:
+  - conda-forge
+channel_priority: strict
+dependencies:
+  - python=3.11
+  - pip
+  - jupyterlab>=4,<5
+  - ipykernel>=6,<7
+  - ipywidgets>=8,<9
+  - numpy>=1.26,<3
+  - scipy>=1.13,<2
+  - pandas>=2.2,<3
+  - matplotlib>=3.8,<4
+  - scikit-learn>=1.4,<2
+  - nibabel>=5,<6
+  - h5py>=3.10,<4
+  - pymatreader>=1.0,<2
+  - edfio=0.4.13
+  - mne=1.12.1
+  - nilearn=0.14.0
+  - pip:
+      - openneuro-py==2026.7.1
