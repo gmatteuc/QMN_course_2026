@@ -33,3 +33,8 @@ notebooks/*.png
 # notebooks/data/alphawaves.npz is what the course uses; re-download the raw
 # release only if the package has to be rebuilt.
 eeg_datasets/
+
+# Animations rendered by 13_winding_intuition_demo.ipynb when it runs. The
+# notebook embeds them in its own output, so the files themselves would only
+# show up as changed every time somebody runs the cells.
+notebooks/assets/13_winding/
