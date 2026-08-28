@@ -18,6 +18,11 @@
 name: qmn
 channels:
   - conda-forge
+  # A fresh Miniconda writes 'defaults' into the user .condarc, so without this
+  # line conda can still reach for Anaconda's own channel while solving. Recent
+  # conda versions then stop and ask the student to accept Anaconda's terms of
+  # service, in the middle of the install, which is the worst possible moment.
+  - nodefaults
 dependencies:
   - python=3.11
   # Core scientific stack

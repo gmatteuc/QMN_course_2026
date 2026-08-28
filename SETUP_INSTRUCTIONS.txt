@@ -11,6 +11,9 @@ The TAs will walk through these steps with you in the Week 1 practical.
 If you have never installed Python before, read top to bottom and run
 the commands exactly as written.
 
+There is also an illustrated version of steps 1 to 3, with screenshots:
+QMN_setup_guide_students.pdf, in this same folder.
+
 
 --------------------------------------------------------------------------------
   1.  INSTALL CONDA  (skip if you already have Anaconda or Miniconda)
@@ -18,23 +21,19 @@ the commands exactly as written.
 
 We recommend Miniconda, the minimal conda installer: it gives you conda
 and a Python, and nothing else. Download the installer for your OS and
-run it with the default options:
+run it with the options it recommends:
 
     https://www.anaconda.com/docs/getting-started/miniconda/install
 
-On Windows, accept "Add Miniconda to my PATH" if asked. Then open a new
-terminal (on Windows: the "Anaconda Prompt (miniconda3)", or any shell
-with conda on PATH) and verify:
+On Windows, leave the PATH option as the installer sets it: you will work
+from the Anaconda Prompt, which finds conda on its own. Open a terminal
+(on Windows the "Anaconda Prompt (miniconda3)", from the Start menu) and
+verify:
 
     conda --version
 
 You should see something like "conda 24.9.0". If you get "command not
 found", close the terminal, reopen it, and try again.
-
-Do NOT install Python separately from python.org. Miniconda already
-includes one, and the qmn environment will provide another. Having several
-Python interpreters on the same machine is the most common cause of package
-import problems.
 
 Also install VS Code (https://code.visualstudio.com) and, from its
 Extensions panel, these official Microsoft extensions:
@@ -50,14 +49,17 @@ Extensions panel, these official Microsoft extensions:
 Download (or git-clone) the course folder shared on Moodle and place it
 somewhere convenient on your computer, e.g.:
 
-    Windows  ->  C:\Users\<your-name>\Documents\QMN_course
-    macOS    ->  /Users/<your-name>/Documents/QMN_course
-    Linux    ->  /home/<your-name>/Documents/QMN_course
+    Windows        ->  %USERPROFILE%\QMN_course
+    macOS / Linux  ->  ~/QMN_course
+
+%USERPROFILE% and ~ both mean your own user folder, so you never have to
+type your user name. Somewhere else works too, as long as you use your own
+path below.
 
 Open a terminal and "cd" into that folder:
 
-    Windows (PowerShell):   cd $HOME\Documents\QMN_course
-    macOS / Linux:          cd ~/Documents/QMN_course
+    Anaconda Prompt:        cd %USERPROFILE%\QMN_course
+    macOS / Linux:          cd ~/QMN_course
 
 Run "dir" (Windows) or "ls" (macOS / Linux) and check that you see at
 least:
@@ -84,9 +86,17 @@ depending on your connection. Grab a coffee. Then activate it:
 You should now see "(qmn)" at the start of your terminal prompt. Every
 Python / pip / jupyter command from this point on uses the qmn environment.
 
-Register qmn as a Jupyter kernel so VS Code (and JupyterLab) can find it:
+If conda says that qmn already exists, you have set it up before. Do not
+remove it: update the one you have instead.
 
-    python -m ipykernel install --user --name qmn --display-name "Python (qmn)"
+    conda env update -n qmn -f environment.yml --prune
+
+Nothing needs to be registered: the Jupyter extension in VS Code finds conda
+environments by itself, since ipykernel is part of the environment. Only if
+qmn never shows up in the kernel list, or if you start JupyterLab from
+outside the environment, run this once with qmn active:
+
+    python -m ipykernel install --user --name qmn
 
 
 --------------------------------------------------------------------------------
@@ -114,7 +124,8 @@ you selected is the right one:
 
 Then open any notebook from the notebooks/ folder, for example
 notebooks/02_math_refresher_TA.ipynb, click "Select Kernel" (top-right)
-and choose "Python (qmn)". Run the first two code cells (Shift+Enter):
+and choose the qmn environment, listed under "Python Environments". Run the
+first two code cells (Shift+Enter):
 if they print package versions and the first rows of the dataset, your
 setup works.
 
@@ -125,7 +136,7 @@ setup works.
 
 Every time you come back to work on the course:
 
-    cd ~/Documents/QMN_course
+    cd ~/QMN_course          (Windows: cd %USERPROFILE%\QMN_course)
     conda activate qmn
     code .
 
@@ -153,6 +164,12 @@ You do NOT need to repeat step 3 - the environment is already there.
   7.  GETTING HELP
 --------------------------------------------------------------------------------
 
+  * An AI assistant       - upload the PDF guide, paste the exact error and
+                            say which step you were on. Try one suggestion at
+                            a time.
+  * Email                 - giulio.matteucci@unige.ch, sami.el-boustani@unige.ch.
+                            Say which system you are on, the step you reached,
+                            and attach a screenshot of the error.
   * Moodle forum          - longer questions and conceptual discussions.
   * Weekly practical      - bring your laptop and ask the TAs in person.
 
