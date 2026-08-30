@@ -38,3 +38,8 @@ eeg_datasets/
 # notebook embeds them in its own output, so the files themselves would only
 # show up as changed every time somebody runs the cells.
 notebooks/assets/13_winding/
+
+# Files the Week 1 notebook writes when a student runs it
+notebooks/session_notes.txt
+notebooks/summary.txt
+notebooks/lab_report.txt
