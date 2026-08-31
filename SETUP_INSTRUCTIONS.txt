@@ -11,8 +11,11 @@ The TAs will walk through these steps with you in the Week 1 practical.
 If you have never installed Python before, read top to bottom and run
 the commands exactly as written.
 
-There is also an illustrated version of steps 1 to 3, with screenshots:
-QMN_setup_guide_students.pdf, in this same folder.
+The same instructions exist as an illustrated guide with screenshots,
+QMN_setup_guide_students.pdf, downloaded from Moodle next to this file. It
+covers the same ground: installing conda, installing VS Code, putting the
+course folder together, building the environment and checking that it works.
+Follow whichever of the two you prefer.
 
 
 --------------------------------------------------------------------------------
