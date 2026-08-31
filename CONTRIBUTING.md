@@ -78,6 +78,15 @@ TA version. Run it with `--audit` over the whole repository to see which noteboo
 solution markers at all, which means they have never been prepared for release.
 
 ```
+python tools/check_student_versions.py           # every student notebook
+```
+
+This checks what would embarrass us: an answer still in the file, an output that gives a task
+away, a scaffold emptied by the stripping, a kernel nobody has, an absolute path. A run of
+solution lines is only reported when the TA version has it nowhere outside a solution block,
+since a repair task is supposed to share its code with its own fix.
+
+```
 python tools/build_cheatsheets.py                # the one page handouts, into cheatsheets/
 ```
 

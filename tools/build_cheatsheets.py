@@ -388,7 +388,6 @@ W3 = [
 trials = pd.read_csv(ROOT / "data" / "ibl_2afc.csv.gz")
 trials.head()                # first five rows
 trials.shape                 # (rows, columns)
-trials.info()                # names, types, how many filled
 trials.dtypes                # kind of value per column
 len(trials)                  # number of rows
 trials["rt_s"].describe().round(3).to_string()""")),
@@ -414,7 +413,7 @@ one = trials[(trials["subject_id"] == "CSHL051")
              & (trials["phase"] == "trained")]
 
 trials[trials["rt_s"].between(0.08, 10.0)]
-trials[trials["cohort"].isin(["CSHL-WT", "NYU-WT"])]
+trials[trials["cohort"] == "CSHL-WT"]
 trials[~trials["correct"].isna()]""") + tab([
     ('&amp;', 'and, each condition in its own brackets'),
     ('|', 'or'),
@@ -425,7 +424,7 @@ trials[~trials["correct"].isna()]""") + tab([
 (trials["rt_s"] < 0).sum()   # how many satisfy it
 trials["cohort"].value_counts()
 trials["subject_id"].unique()
-trials["subject_id"].nunique()
+len(trials["subject_id"].unique())
 trials["rt_s"].isna().sum()  # how many are missing
 trials.dropna(subset=["rt_s"])""")),
 
@@ -469,7 +468,7 @@ round(float(value), 3)""")),
 
  ('Figures with seaborn', pre("""
 fig, ax = plt.subplots(figsize=(6, 4))
-sns.histplot(data=df, x="rt_s", bins=40, ax=ax)
+sns.kdeplot(x=values, ax=ax, fill=True)
 sns.boxplot(data=df, x="cohort", y="rt_s", ax=ax,
             order=COHORT_ORDER, width=0.5, fliersize=0)
 sns.stripplot(data=df, x="cohort", y="rt_s", ax=ax,
