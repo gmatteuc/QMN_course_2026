@@ -32,3 +32,61 @@ flag unclear instructions, coding errors and unexpected outputs.
 
 Comments go in as **GitHub issues**, one per notebook, with the points as a checklist. Ticking a box
 records progress without writing a comment.
+
+## Notebook conventions
+
+These hold for every week, so that the notebooks feel like one course rather than thirteen.
+
+**Kernel.** `python3` as the name, `qmn` as the display name. Selecting the *registered* `qmn`
+kernel in VS Code silently rewrites this on save, so select the conda environment itself.
+
+**Paths.** Never absolute. Every notebook starts with
+
+```python
+ROOT = Path.cwd() if (Path.cwd() / "data").is_dir() else Path.cwd().parent
+```
+
+and builds paths from `ROOT`, so the notebook runs from the folder it lives in and from the
+repository root alike.
+
+**Solutions** are wrapped in two markers, both of them required:
+
+```python
+# --- SOLUTION BELOW: TO BE REMOVED IN THE STUDENT VERSION
+...
+# --- END SOLUTION
+```
+
+**Exercises** are boxed, titled `Task N.N` and tagged for difficulty: one star is essential, two
+is intermediate, three is an optional challenge.
+
+**Optional concepts** carry a microscope after the section heading, plus one line saying why they
+are optional and whether the material comes back later. The rule is strict: nothing that is not
+optional may depend on something that is. Check before marking, since a tool used in a later week
+cannot be optional however advanced it feels.
+
+## Building what the students get
+
+```
+python tools/make_student_versions.py            # every notebook
+python tools/make_student_versions.py 01 02      # only these weeks
+python tools/make_student_versions.py --audit    # report only, write nothing
+```
+
+This removes the solutions, clears every output, and writes `NN_topic_STUDENT.ipynb` next to the
+TA version. Run it with `--audit` over the whole repository to see which notebooks have no
+solution markers at all, which means they have never been prepared for release.
+
+```
+python tools/check_student_versions.py           # every student notebook
+```
+
+This checks what would embarrass us: an answer still in the file, an output that gives a task
+away, a scaffold emptied by the stripping, a kernel nobody has, an absolute path. A run of
+solution lines is only reported when the TA version has it nowhere outside a solution block,
+since a repair task is supposed to share its code with its own fix.
+
+```
+python tools/build_cheatsheets.py                # the one page handouts, into cheatsheets/
+```
+
