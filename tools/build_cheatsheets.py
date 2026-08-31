@@ -108,11 +108,9 @@ f"{n:>5}"                    # pad right
 f"p = {p:.4g}"               # 4 significant digits""")),
 
  ('Text', pre("""
-name = "CSHL" + "_051"
-len(name)                    # 8 characters
-name.upper(), name.lower()
-name.split("_")              # ['CSHL', '051']
-"CSHL" in name               # True""")),
+name = "CSHL" + "_051"       # joining text with +
+len(name)                    # how many characters
+'single' and "double"        # both work, stay consistent""")),
 
  ('Lists', pre("""
 rts = [0.31, 0.42, 0.28]
@@ -182,19 +180,12 @@ for trial in trials:
 for mouse, n in counts.items():
     print(f"{mouse}: {n} trials")""")),
 
- ('Pattern: average per group', pre("""
-total = {}
-n = {}
-for i in range(len(labs)):
-    lab = labs[i]
-    if lab not in total:
-        total[lab] = 0
-        n[lab] = 0
-    total[lab] += ages[i]
-    n[lab] += 1
+ ('Pattern: a column as a plain list', pre("""
+labs = mice["lab"].tolist()       # out of pandas, into Python
+for lab in labs:
+    print(lab)
 
-for lab in total:
-    print(f"{lab:<12} {total[lab] / n[lab]:.1f} weeks")""")),
+mice["lab"].unique().tolist()     # each value once""")),
 
  ('Pattern: count with conditions', pre("""
 n_correct = 0
@@ -227,9 +218,15 @@ import numpy as np
 from pathlib import Path
 from src.qmn_utils import sigmoid
 
-math.sqrt(50), math.log(1000), math.pi
+math.sqrt(50), math.log(1000)
 random.seed(1); random.choice(rts)
 Path.cwd(), Path("data") / "file.csv\"""")),
+
+ ('List comprehensions ' + LENS, pre("""
+squares = [n ** 2 for n in range(10)]
+evens = [n ** 2 for n in range(10) if n % 2 == 0]""")
+  + '<p>A shorter way to write a loop that builds a list. You never have to write one in this '
+    'course, but they appear in code you read from Week 2 on.</p>'),
 
  ('Files ' + LENS, pre("""
 with open("summary.txt", "w") as f:
@@ -261,9 +258,9 @@ sigmoid(0.5, slope=4)        # say which one you mean
 sigmoid(0.5, 4, 0.1)         # or give them in order
 
 def two_things(x):
-    return x.mean(), x.std(ddof=1)
+    return x.min(), x.max()
 
-m, s = two_things(values)    # unpack what comes back""")),
+low, high = two_things(values)   # unpack what comes back""")),
 
  ('Your own module ' + LENS, pre("""
 from src.qmn_utils import sigmoid, gaussian
@@ -276,7 +273,6 @@ importlib.reload(src.qmn_utils)""")),
 np.array([1.0, 2.0, 3.0])
 np.linspace(0, 6, 600)       # 600 points, both ends included
 np.arange(0, 6, 0.01)        # step 0.01, end excluded
-np.zeros(10), np.ones(10)
 np.full_like(t, 0.05)        # same shape, one value
 x.shape, x.size, len(x)
 dt = t[1] - t[0]             # the spacing of a grid""")),
@@ -287,7 +283,6 @@ np.exp(x), np.log(x), np.sqrt(x)
 np.sin(x), np.cos(x)
 np.abs(x), np.pi, np.e
 x.mean(), x.max(), x.min(), x.sum()
-x.std(ddof=1)
 np.allclose(a, b)            # equal to rounding error""")),
 
  ('Picking parts out', pre("""
@@ -323,7 +318,6 @@ plt.show()""")),
  ('Other kinds of panel', tab([
     ('ax.scatter(x, y)', 'one dot per observation'),
     ('ax.hist(v, bins=20, alpha=0.7)', 'a distribution'),
-    ('ax.bar(names, heights)', 'a value per category'),
     ('ax.errorbar(x, y, yerr=e)', 'value with uncertainty'),
     ('ax.text(x, y, "label")', 'writing on the axes'),
  ])),
@@ -377,19 +371,15 @@ area = np.trapezoid(y, x)    # np.trapz on older NumPy
 running = np.cumsum(y) * dt  # the accumulation
 np.diff(y)                   # differences between neighbours""")),
 
- ('Pattern: repeat an estimate', pre("""
-rng = np.random.default_rng(7)
+ ('Pattern: a signal built from parts', pre("""
+steps = [(12, 0.15, 0.8),      # a list of tuples, one per part
+         (28, 0.18, 0.5),
+         (45, 0.07, 1.2)]
 
-def estimate_many(noise_sd, n_repeats=100):
-    estimates = []
-    for _ in range(n_repeats):
-        t, trace = make_transient(noise_sd, rng)
-        estimates.append(recover_tau(t, trace))
-    return np.array(estimates)
-
-values = estimate_many(0.10)
-print(f"mean {values.mean():.3f}, "
-      f"spread {values.std(ddof=1):.3f}")""")),
+curve = np.full_like(sessions, 0.5)      # start from a baseline
+for midpoint, height, sharpness in steps:
+    curve = curve + transition(sessions, midpoint,
+                               height, sharpness)""")),
 ]
 
 # --------------------------------------------------------------------------- Week 3
