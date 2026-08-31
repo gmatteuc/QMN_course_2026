@@ -363,8 +363,14 @@ if above.any():              # ask first: does it ever happen?
     x[first]                 # ... and where that is
 # on an all False array argmax returns 0, silently
 
+def smooth(y, w):            # moving average over w points
+    pad = w // 2             # repeat the ends, never pad with zeros
+    p = np.concatenate([np.full(pad, y[0]), y, np.full(pad, y[-1])])
+    return np.convolve(p, np.ones(w) / w, mode="valid")
+
 from scipy.signal import find_peaks
-peaks, properties = find_peaks(rate, height=0.005)
+rate = np.gradient(smooth(y, 5), x)   # smooth, then differentiate
+peaks, properties = find_peaks(rate, height=0.005, distance=8)
 x[peaks], rate[peaks]        # where the peaks are, how tall""")),
 
  ('Calculus, numerically', pre("""
