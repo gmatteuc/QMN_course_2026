@@ -52,3 +52,6 @@ cheatsheets/_*.html
 QMN_practicals_1to4/
 QMN_practicals_1to4.zip
 
+# The build scripts: stripping solutions, the cheat sheets, the student package.
+# Internal to the teaching team, kept out of the repository the students can see.
+tools/
