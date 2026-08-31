@@ -46,3 +46,9 @@ notebooks/lab_report.txt
 
 # intermediate HTML for the cheat sheets, only the PDFs are kept
 cheatsheets/_*.html
+
+# The student package, built by tools/build_student_package.py. It is 25 MB and it is
+# rebuilt from the repository in one command, so it is not worth versioning.
+QMN_practicals_1to4/
+QMN_practicals_1to4.zip
+

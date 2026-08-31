@@ -90,3 +90,20 @@ since a repair task is supposed to share its code with its own fix.
 python tools/build_cheatsheets.py                # the one page handouts, into cheatsheets/
 ```
 
+## Building the package the students receive
+
+```
+python tools/build_student_package.py
+```
+
+Writes `QMN_practicals_1to4.zip`, 25 MB: the four student notebooks under their plain names, the
+behavioural data, the images, `src/`, the four cheat sheets, the setup guide in both formats,
+`environment.yml`, and a README telling students what to do in what order.
+
+The EEG datasets stay out, since they are 74 MB and belong to Weeks 10 to 13. `check_env.py`
+reports them as "later" rather than missing, so a student with only this package sees a clean
+check.
+
+It is worth rebuilding and extracting it somewhere else before sending: all four notebooks should
+run from the extracted folder, Week 1 raising its seven deliberate errors and the others none.
+
