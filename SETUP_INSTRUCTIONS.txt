@@ -46,28 +46,57 @@ Extensions panel, these official Microsoft extensions:
   2.  GET THE COURSE MATERIAL
 --------------------------------------------------------------------------------
 
-Download (or git-clone) the course folder shared on Moodle and place it
-somewhere convenient on your computer, e.g.:
+The material is on Moodle as several separate files, so that a corrected
+notebook can be replaced without you downloading everything again. You put
+them together once, into a single folder, and that folder is where you work
+for the rest of the semester.
 
-    Windows        ->  %USERPROFILE%\QMN_course
-    macOS / Linux  ->  ~/QMN_course
+  a) Download QMN_support_files.zip and unzip it somewhere convenient:
 
-%USERPROFILE% and ~ both mean your own user folder, so you never have to
-type your user name. Somewhere else works too, as long as you use your own
-path below.
+         Windows        ->  %USERPROFILE%\QMN_practicals
+         macOS / Linux  ->  ~/QMN_practicals
 
-Open a terminal and "cd" into that folder:
+     %USERPROFILE% and ~ both mean your own user folder, so you never have
+     to type your user name. Somewhere else works too, as long as you use
+     your own path below. Unzipping makes a folder called QMN_practicals
+     holding data/, assets/ and src/.
 
-    Anaconda Prompt:        cd %USERPROFILE%\QMN_course
-    macOS / Linux:          cd ~/QMN_course
+  b) Download environment.yml and put it in that same folder.
+
+  c) Download each notebook and put it in that same folder as well, beside
+     data/. Do the same for every notebook posted later in the semester.
+
+When you are done it looks like this:
+
+    QMN_practicals/
+        data/                                 from the zip
+        assets/                               from the zip
+        src/                                  from the zip
+        environment.yml
+        01_programming_fundamentals.ipynb     one Moodle item each
+        02_math_refresher.ipynb
+        03_probability_descriptive.ipynb
+        04_inference_ttests_power.ipynb
+
+THIS IS THE PART THAT GOES WRONG. A notebook left in your Downloads folder
+cannot find the data, and its first cell fails with an error about a missing
+file. The notebooks look for data/ in the folder they are sitting in, so
+they have to sit next to it.
+
+The cheat sheets and this guide are yours to keep anywhere; nothing reads them.
+
+Now open a terminal and "cd" into the folder:
+
+    Anaconda Prompt:        cd %USERPROFILE%\QMN_practicals
+    macOS / Linux:          cd ~/QMN_practicals
 
 Run "dir" (Windows) or "ls" (macOS / Linux) and check that you see at
 least:
 
     environment.yml
-    README.md
-    SETUP_INSTRUCTIONS.txt
-    notebooks/
+    data
+    src
+    01_programming_fundamentals.ipynb
 
 
 --------------------------------------------------------------------------------
@@ -107,11 +136,10 @@ In VS Code (recommended):
 
     code .
 
-The fastest check, with the qmn environment active. From the course folder:
+The fastest check, with the qmn environment active. From the QMN_practicals
+folder:
 
-    python notebooks/src/check_env.py
-
-(or "python src/check_env.py" if you are already inside notebooks/)
+    python src/check_env.py
 
 It prints one line per package with the version you actually have, one line
 per dataset, and tells you what to do if something is missing.
@@ -122,8 +150,8 @@ you selected is the right one:
     from src.check_env import check_environment
     check_environment()
 
-Then open the first notebook of the course from the notebooks/ folder,
-01_programming_fundamentals.ipynb, click "Select Kernel" (top-right)
+Then open the first notebook of the course, 01_programming_fundamentals.ipynb,
+click "Select Kernel" (top-right)
 and choose the qmn environment, listed under "Python Environments". Run the
 first two code cells (Shift+Enter):
 if they print package versions and the first rows of the dataset, your
@@ -136,7 +164,7 @@ setup works.
 
 Every time you come back to work on the course:
 
-    cd ~/QMN_course          (Windows: cd %USERPROFILE%\QMN_course)
+    cd ~/QMN_practicals      (Windows: cd %USERPROFILE%\QMN_practicals)
     conda activate qmn
     code .
 
