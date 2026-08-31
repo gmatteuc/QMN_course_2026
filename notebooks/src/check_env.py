@@ -33,10 +33,14 @@ REQUIRED = [
     ("ipywidgets", "interactive figures, Notebooks 9 and 10"),
 ]
 
-# The datasets every notebook reads from notebooks/data/.
+# What the notebooks read from notebooks/data/. The behavioural files are needed from Week 1,
+# the EEG ones only from Week 10, and they are handed out later because they are large. Their
+# absence is not a problem, so it is reported as such rather than as a missing file.
 DATASETS = [
     "ibl_2afc.csv.gz",
     "ibl_2afc_subjects.csv",
+]
+DATASETS_LATER = [
     "alphawaves.npz",
     "erpcore_n170.npz",
 ]
@@ -93,6 +97,15 @@ def check_environment(verbose=True):
             if verbose:
                 print(f"  MISSING {filename:<24} expected in {root / 'data'}")
 
+    for filename in DATASETS_LATER:
+        path = root / "data" / filename
+        if verbose:
+            if path.is_file():
+                size_mb = path.stat().st_size / 1e6
+                print(f"  ok      {filename:<24} {size_mb:6.1f} MB")
+            else:
+                print(f"  later   {filename:<24} only needed from Week 10, not a problem now")
+
     ok = not missing_packages and not missing_data
     if verbose:
         print()
@@ -102,7 +115,7 @@ def check_environment(verbose=True):
             if missing_packages:
                 print("Missing packages :", ", ".join(missing_packages))
                 print("  Fix with       : conda env update -f environment.yml")
-                print("  and check you selected the 'Python (qmn)' kernel, top right.")
+                print("  and check you selected the qmn environment as the kernel, top right.")
             if missing_data:
                 print("Missing data     :", ", ".join(missing_data))
                 print("  Fix with       : git pull, and open the notebook from notebooks/")

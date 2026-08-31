@@ -122,8 +122,8 @@ you selected is the right one:
     from src.check_env import check_environment
     check_environment()
 
-Then open any notebook from the notebooks/ folder, for example
-notebooks/02_math_refresher_TA.ipynb, click "Select Kernel" (top-right)
+Then open the first notebook of the course from the notebooks/ folder,
+01_programming_fundamentals.ipynb, click "Select Kernel" (top-right)
 and choose the qmn environment, listed under "Python Environments". Run the
 first two code cells (Shift+Enter):
 if they print package versions and the first rows of the dataset, your
