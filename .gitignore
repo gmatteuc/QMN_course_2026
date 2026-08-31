@@ -43,3 +43,6 @@ notebooks/assets/13_winding/
 notebooks/session_notes.txt
 notebooks/summary.txt
 notebooks/lab_report.txt
+
+# intermediate HTML for the cheat sheets, only the PDFs are kept
+cheatsheets/_*.html
