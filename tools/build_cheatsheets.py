@@ -320,6 +320,7 @@ plt.show()""")),
     ('ax.hist(v, bins=20, alpha=0.7)', 'a distribution'),
     ('ax.errorbar(x, y, yerr=e)', 'value with uncertainty'),
     ('ax.text(x, y, "label")', 'writing on the axes'),
+    ('ax.semilogy(x, y)', 'ax.plot with a log y axis'),
  ])),
 
  ('Several panels', pre("""
@@ -462,9 +463,25 @@ rng.choice(values, size=20, replace=True)""")
  ('Summary numbers', pre("""
 x.mean(), x.median()
 np.std(x, ddof=1), np.var(x, ddof=1)    # always ddof=1
-np.percentile(x, [25, 50, 75])
+np.percentile(x, [25, 50, 75])          # on an array
+df["rt_s"].quantile(0.25)               # the same, on a column
 sem = np.std(x, ddof=1) / np.sqrt(len(x))
 round(float(value), 3)""")),
+
+ ('Showing a table', pre("""
+print(df)                    # fine, but plain
+display(df)                  # the formatted table Jupyter draws
+display(df.head(3))
+print(df.round(3).to_string())     # tidy plain text
+""")
+  + '<p><code>display</code> comes from the import at the top of the notebook.</p>'),
+
+ ('Row by row, and why not to', pre("""
+for _, row in small_table.iterrows():
+    print(row["subject_id"], row["cohort"])
+""")
+  + '<p>Fine for thirty rows, a bad idea for 694,000: a loop over rows is thousands of times '
+    'slower than the same job done with <code>groupby</code> or a mask.</p>'),
 
  ('Figures with seaborn', pre("""
 fig, ax = plt.subplots(figsize=(6, 4))
@@ -475,7 +492,8 @@ sns.stripplot(data=df, x="cohort", y="rt_s", ax=ax,
               color="black", size=5)
 sns.violinplot(data=df, x="cohort", y="rt_s", ax=ax)
 ax.set_ylabel("median RT per mouse (s)")""")
-  + '<p>Everything seaborn draws is a Matplotlib figure, so <code>ax.set_xlabel</code> still works.</p>'),
+  + '<p>Everything seaborn draws is a Matplotlib figure, so <code>ax.set_xlabel</code> still '
+    'works. The figure, axes, labels and legends are on the <b>Week 2 sheet</b>.</p>'),
 
  ('Building a table yourself', pre("""
 pd.DataFrame({"n": sizes, "power": curve})
@@ -572,6 +590,13 @@ low, high = difference - margin, difference + margin""")),
     ('stats.levene(a, b)', 'do the two spreads differ?'),
  ])),
 
+ ('Random numbers for a simulation', pre("""
+rng = np.random.default_rng(12)      # 12 is the seed: same numbers every run
+rng.normal(loc=0, scale=1, size=n)   # one simulated group
+""")
+  + '<p>Loading a file, merging two tables and grouping are on the <b>Week 3 sheet</b>; the '
+    'figure, axes and labels are on the <b>Week 2</b> one.</p>'),
+
  ('Pattern: power by simulation', pre("""
 def simulate_power(d, n, rng, repeats=2000, alpha=0.05):
     hits = 0
@@ -645,7 +670,7 @@ ax.set_ylim(0, 1); ax.legend(frameon=False)""")),
 ]
 
 SHEETS = {
- '1': ('Week 1: Python basics', W1, 6.9),
+ '1': ('Week 1: Python basics', W1, 7.2),
  '2': ('Week 2: functions, arrays, figures, calculus', W2, 7.6),
  '3': ('Week 3: pandas, random numbers, seaborn', W3, 7.6),
  '4': ('Week 4: scipy.stats, tests and simulations', W4, 7.6),
