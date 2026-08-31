@@ -86,7 +86,10 @@ cannot find the data, and its first cell fails with an error about a missing
 file. The notebooks look for data/ in the folder they are sitting in, so
 they have to sit next to it.
 
-The cheat sheets and this guide are yours to keep anywhere; nothing reads them.
+The other Moodle items do not go in the folder. This guide and its illustrated
+twin are the install instructions, and the four cheat sheets, one per week, are
+a page of syntax each to keep open beside you while you work. Nothing reads
+them, so keep them wherever suits you.
 
 Now open a terminal and "cd" into the folder:
 
