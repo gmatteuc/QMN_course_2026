@@ -493,8 +493,10 @@ ax.set_xticklabels(labels, rotation=45)""")),
 
  ('Pattern: repeat the experiment', pre("""
 def sampling_distribution(population, n, repeats, rng):
-    return np.array([rng.choice(population, size=n).mean()
-                     for _ in range(repeats)])
+    means = []
+    for _ in range(repeats):
+        means.append(rng.choice(population, size=n).mean())
+    return np.array(means)
 
 for n in [5, 20, 80, 320]:
     means = sampling_distribution(pop, n, 2000, rng)
@@ -579,8 +581,14 @@ def simulate_power(d, n, rng, repeats=2000, alpha=0.05):
     return hits / repeats
 
 sizes = [10, 20, 30, 40, 60]
-curve = [simulate_power(d, n, rng) for n in sizes]
-enough = [n for n, p in zip(sizes, curve) if p >= 0.8]""")),
+curve = []
+for n in sizes:
+    curve.append(simulate_power(d, n, rng))
+
+enough = []
+for n, p in zip(sizes, curve):
+    if p >= 0.8:
+        enough.append(n)""")),
 
  ('Pattern: a function returning a report', pre("""
 def compare_groups(a, b, alpha=0.05):
