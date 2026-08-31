@@ -356,6 +356,17 @@ noise = rng.normal(0, 0.15, size=t.size)
 trace = clean + noise
 i0 = np.argmin(np.abs(x))    # index of the value nearest zero""")),
 
+ ('Finding a point, finding peaks', pre("""
+above = y >= 0.8             # array of True and False
+if above.any():              # ask first: does it ever happen?
+    first = np.argmax(above) # position of the first True
+    x[first]                 # ... and where that is
+# on an all False array argmax returns 0, silently
+
+from scipy.signal import find_peaks
+peaks, properties = find_peaks(rate, height=0.005)
+x[peaks], rate[peaks]        # where the peaks are, how tall""")),
+
  ('Calculus, numerically', pre("""
 dy = np.gradient(y, x)       # slope at every point
 d2y = np.gradient(dy, x)     # curvature
