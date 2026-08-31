@@ -65,45 +65,16 @@ are optional and whether the material comes back later. The rule is strict: noth
 optional may depend on something that is. Check before marking, since a tool used in a later week
 cannot be optional however advanced it feels.
 
-## Building what the students get
+## Preparing a notebook for release
 
-```
-python tools/make_student_versions.py            # every notebook
-python tools/make_student_versions.py 01 02      # only these weeks
-python tools/make_student_versions.py --audit    # report only, write nothing
-```
+Two things turn a TA notebook into the version a student receives: the solutions come out, and
+every output is cleared so that students have to run the cells themselves. Both are done by a
+script that Giulio keeps outside this repository, so the only thing your notebook has to do is
+follow the conventions above, in particular the two solution markers around every answer.
 
-This removes the solutions, clears every output, and writes `NN_topic_STUDENT.ipynb` next to the
-TA version. Run it with `--audit` over the whole repository to see which notebooks have no
-solution markers at all, which means they have never been prepared for release.
+Ask him to build and check yours whenever it is ready. The check looks for an answer left in the
+file, an output that gives a task away, a scaffold emptied by the stripping, a kernel nobody has
+and absolute paths, and it reports which notebooks have no solution markers at all, which means
+they have never been prepared for release.
 
-```
-python tools/check_student_versions.py           # every student notebook
-```
-
-This checks what would embarrass us: an answer still in the file, an output that gives a task
-away, a scaffold emptied by the stripping, a kernel nobody has, an absolute path. A run of
-solution lines is only reported when the TA version has it nowhere outside a solution block,
-since a repair task is supposed to share its code with its own fix.
-
-```
-python tools/build_cheatsheets.py                # the one page handouts, into cheatsheets/
-```
-
-## Building the package the students receive
-
-```
-python tools/build_student_package.py
-```
-
-Writes `QMN_practicals_1to4.zip`, 25 MB: the four student notebooks under their plain names, the
-behavioural data, the images, `src/`, the four cheat sheets, the setup guide in both formats,
-`environment.yml`, and a README telling students what to do in what order.
-
-The EEG datasets stay out, since they are 74 MB and belong to Weeks 10 to 13. `check_env.py`
-reports them as "later" rather than missing, so a student with only this package sees a clean
-check.
-
-It is worth rebuilding and extracting it somewhere else before sending: all four notebooks should
-run from the extracted folder, Week 1 raising its seven deliberate errors and the others none.
-
+The one page cheat sheet for each week, and the zip the students receive, are built the same way.
