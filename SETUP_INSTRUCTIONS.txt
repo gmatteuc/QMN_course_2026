@@ -49,6 +49,9 @@ Extensions panel, these official Microsoft extensions:
   2.  GET THE COURSE MATERIAL
 --------------------------------------------------------------------------------
 
+If you received everything as a single zip file rather than as separate
+downloads, this section is already done for you: unzip it and go to section 3.
+
 The material is on Moodle as several separate files, so that a corrected
 notebook can be replaced without you downloading everything again. You put
 them together once, into a single folder, and that folder is where you work
@@ -113,6 +116,12 @@ From the project root (the folder that contains environment.yml), run:
 
     conda env create -f environment.yml
 
+IF CONDA ASKS YOU TO ACCEPT TERMS OF SERVICE, and it may, it stops and prints
+a command beginning with "conda tos accept". Copy the whole line it gives you,
+run it, then run the create command again. That is Anaconda asking you to
+agree to their terms rather than anything being broken, and it happens once
+per machine.
+
 This installs Python and all required libraries; it takes 5-15 minutes
 depending on your connection. Grab a coffee. Then activate it:
 
@@ -157,11 +166,17 @@ you selected is the right one:
     check_environment()
 
 Then open the first notebook of the course, 01_programming_fundamentals.ipynb,
-click "Select Kernel" (top-right)
-and choose the qmn environment, listed under "Python Environments". Run the
-first two code cells (Shift+Enter):
-if they print package versions and the first rows of the dataset, your
-setup works.
+and click "Select Kernel" at its top right. Choose "Python Environments" from
+the panel that drops down, then pick qmn from the list.
+
+The list names environments by their path rather than by name, and the Python
+version does not tell them apart, so look for the entry whose path ends in
+"envs/qmn". You will know it worked because the button at the top right stops
+saying "Select Kernel" and shows the environment instead.
+
+Then run the first two code cells (Shift+Enter): if they print package
+versions and the first rows of the dataset, your setup works. The illustrated
+guide has screenshots of all three moments.
 
 
 --------------------------------------------------------------------------------
